@@ -1,18 +1,34 @@
 {
   "id": "macro-utility",
   "title": "Macro Utility!? Bakana!",
-  "description": "A growing collection of macros and macro utility functions for use with Midi-QOL.",
-  "version": "#{VERSION}#",
-  "library": "false",
+  "version": "0.1.0",
   "compatibility": {
     "minimum": "12",
     "verified": "12",
     "maximum": "12"
   },
+  "description": "A growing collection of macros and macro utility functions for use with Midi-QOL.",
   "authors": [
     {
       "name": "Bakana Baka",
       "discord": "bakanabaka",
+      "flags": {}
+    }
+  ],
+  "esmodules": [
+    "scripts/lib/lib.js"
+  ],
+  "url": "https://github.com/aljames-arctic/macro-utility",
+  "manifest": "https://github.com/aljames-arctic/macro-utility/raw/#{VERSION}#/module.json",
+  "download": "https://github.com/aljames-arctic/macro-utility/raw/#{VERSION}#/module.zip",
+  "changelog": "https://github.com/aljames-arctic/macro-utility/blob/#{VERSION}#/changelog.md",
+  "bugs": "https://github.com/aljames-arctic/macro-utility/issues",
+  "license": "LICENSE",
+  "readme": "README.md",
+  "media": [
+    {
+      "type": "icon",
+      "loop": false,
       "flags": {}
     }
   ],
@@ -25,19 +41,6 @@
       }
     ]
   },
-  "scripts": [
-    "scripts/lib/lib.js"
-  ],
-  "styles": [
-    "styles/module.css"
-  ],
-  "languages": [
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "languages/en.json"
-    }
-  ],
   "packs": [
     {
       "name": "internal",
@@ -93,18 +96,6 @@
         "ASSISTANT": "OWNER"
       },
       "system": "dnd5e"
-    }
-  ],
-  "url": "#{URL}#",
-  "manifest": "#{MANIFEST}#",
-  "download": "#{DOWNLOAD}#",
-  "license": "LICENSE",
-  "readme": "README.md",
-  "media": [
-    {
-      "type": "icon",
-      "loop": false,
-      "flags": {}
     }
   ]
 }
