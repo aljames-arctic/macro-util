@@ -25,9 +25,6 @@
       }
     ]
   },
-  "esmodules": [
-    "src/setup.js"
-  ],
   "scripts": [
     "scripts/lib/lib.js"
   ],
