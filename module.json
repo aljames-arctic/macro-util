@@ -1,7 +1,7 @@
 {
-  "id": "macro-utility",
+  "id": "macro-util",
   "title": "Macro Utility!? Bakana!",
-  "version": "0.1.0",
+  "version": "0.1.x",
   "compatibility": {
     "minimum": "12",
     "verified": "12",
@@ -18,11 +18,11 @@
   "esmodules": [
     "scripts/lib/lib.js"
   ],
-  "url": "https://github.com/aljames-arctic/macro-utility",
-  "manifest": "https://github.com/aljames-arctic/macro-utility/raw/#{VERSION}#/module.json",
-  "download": "https://github.com/aljames-arctic/macro-utility/raw/#{VERSION}#/module.zip",
-  "changelog": "https://github.com/aljames-arctic/macro-utility/blob/#{VERSION}#/changelog.md",
-  "bugs": "https://github.com/aljames-arctic/macro-utility/issues",
+  "url": "https://github.com/aljames-arctic/macro-util",
+  "manifest": "https://github.com/aljames-arctic/macro-util/raw/#{VERSION}#/module.json",
+  "download": "https://github.com/aljames-arctic/macro-util/raw/#{VERSION}#/module.zip",
+  "changelog": "https://github.com/aljames-arctic/macro-util/blob/#{VERSION}#/changelog.md",
+  "bugs": "https://github.com/aljames-arctic/macro-util/issues",
   "license": "LICENSE",
   "readme": "README.md",
   "media": [
