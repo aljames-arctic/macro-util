@@ -1,7 +1,7 @@
 ![](https://img.shields.io/badge/Foundry-v10-informational)
 <!--- Downloads @ Latest Badge -->
 <!--- replace <user>/<repo> with your username/repository -->
-<!--- ![Latest Release Download Count](https://img.shields.io/github/downloads/<user>/<repo>/latest/module.zip) -->
+<!--- ![Latest Release Download Count](https://img.shields.io/github/downloads/aljames-arctic/macro-util/latest/module.zip) -->
 
 <!--- Forge Bazaar Install % Badge -->
 <!--- replace <your-module-name> with the `name` in your manifest -->
@@ -66,6 +66,6 @@ Clicking "Save" in the bottom right will save the new version, which means that 
 
 # FoundryVTT Module
 
-Does something, probably
+A collection of Midi-QOL related utility functions to enable the rapid production of quality items, features, and abilities.
 
 ## Changelog
