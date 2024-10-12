@@ -18,10 +18,9 @@
   "esmodules": [
     "scripts/lib/lib.js"
   ],
-  "url": "https://github.com/aljames-arctic/macro-util",
-  "manifest": "https://github.com/aljames-arctic/macro-util/raw/#{VERSION}#/module.json",
-  "download": "https://github.com/aljames-arctic/macro-util/raw/#{VERSION}#/module.zip",
-  "changelog": "https://github.com/aljames-arctic/macro-util/blob/#{VERSION}#/changelog.md",
+  "url": "#{URL}#",
+  "manifest": "#{MANIFEST}#",
+  "download": "#{DOWNLOAD}#",
   "bugs": "https://github.com/aljames-arctic/macro-util/issues",
   "license": "LICENSE",
   "readme": "README.md",
