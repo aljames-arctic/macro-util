@@ -73,7 +73,7 @@ async function destroy(token, { id }) {
 }
 
 export const crownOfStars = {
-    create  : create,
-    remove  : remove,
-    destroy : destroy,
+    create,
+    remove,
+    destroy,
 };

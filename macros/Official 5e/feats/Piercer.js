@@ -149,10 +149,12 @@ async function preDamageRollComplete() {
     if (workflow.isCritical) {
         const damageAmount = `1d${maximalDie(workflow.damageRolls)}[piercing]`;
         const damageRoll = await new Roll(damageAmount).evaluate();
-        await game.dice3d?.showForRoll(damageRoll);
 
         workflow.damageRolls.push(damageRoll);
-        await workflow.setDamageRolls(workflow.damageRolls);
+        await Promise.all([
+            game.dice3d?.showForRoll(damageRoll), 
+            workflow.setDamageRolls(workflow.damageRolls)
+        ]);
     }
 }
 
