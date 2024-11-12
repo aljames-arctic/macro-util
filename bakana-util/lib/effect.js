@@ -22,4 +22,4 @@ async function remove(actorEntity, effect) {
     else await macroUtil.generic.remove(effect);
 }
 
-export const effectsApi = { create, find, remove };
+export const effectApi = { create, find, remove };
