@@ -5,7 +5,6 @@ const effect = scope.effect;
 
 const ANIMATION_FILE = 'jb2a.twinkling_stars.points07.white';
 
-console.error(args);
 const spellLevel = args[args.length - 2];
 const moteCount = 2 * (spellLevel ?? 7) - 7;
 const effectUniqueName = `[${actor.id}] Crown of Stars`;
