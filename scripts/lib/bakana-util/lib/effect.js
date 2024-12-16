@@ -1,5 +1,11 @@
-function find(actorEntity, effect) {
-    return Array.from(actorEntity.allApplicableEffects()).find((ef) => ef.name == effect?.name && ef.origin == effect?.origin);
+function find(actorEntity, effect, {name=true, origin=true}) {
+    return Array.from(actorEntity.allApplicableEffects()).find((ef) => ((ef.name == effect?.name) || !name) && ((ef.origin == effect?.origin) || !origin));
+}
+
+async function apply(entity, effectData) {
+    let baseEffectData = { "flags.dae.dontApply" : false };
+    foundry.utils.mergeObject(effectData, baseEffectData);
+    await macroUtil.effect.create(entity, effectData);
 }
 
 async function create(entity, effectData, { concentrationItem, parentEntity, identifier, vae, interdependent, strictlyInterdependent, keepId, } = {}) {
@@ -22,4 +28,4 @@ async function remove(actorEntity, effect) {
     else await macroUtil.generic.remove(effect);
 }
 
-export const effectsApi = { create, find, remove };
+export const effectsApi = { apply, create, find, remove };
