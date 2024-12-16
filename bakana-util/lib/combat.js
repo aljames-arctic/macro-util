@@ -8,14 +8,12 @@ function getCombatInfo() {
 }
 
 function isSameTurn(combatInfo) {
-    if (!game.combat) return false;
-    if (combatInfo.id != game.combat.id) return false;
-    if (combatInfo.round != game.combat.round) return false;
+    if (!isSameRound(combatInfo)) return false;
     return combatInfo.turn == game.combat.turn;
 }
 
 function isSameRound(combatInfo) {
-    if (!game.combat) return false;
+    if (!game.combat || !combatInfo) return false;
     if (combatInfo.id != game.combat.id) return false;
     return combatInfo.round == game.combat.round;
 }
