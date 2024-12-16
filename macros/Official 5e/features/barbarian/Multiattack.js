@@ -61,32 +61,27 @@ async function parseOptionMap(optionMap) {
     }
 }
 
-async function getCompendiumObject(fieldFilter, dataFilter) {
-    if (!itemCompendium) return;
-
-    let pack = game.packs.get(itemCompendium);
+async function getCompendiumDocuments(compendiumKey, fieldOptions, dataFilter) {
+    let pack = game.packs.get(compendiumKey);
     if (!pack) {
-        console.error(`Pack ${itemCompendium} not found.`);
+        console.error(`${compendiumKey} does not exist.`)
         return undefined;
     }
-
-    let match = await pack.getIndex(fieldFilter);
-    match = match.filter(dataFilter);
-    if (!match.length) return undefined;
-    if (match.length != 1) console.warn('Too many matches!!! Returning the first');
-    
-    return await pack.getDocument(match[0]._id);
+    let packIndex = await pack.getIndex(fieldOptions);
+    let matches = packIndex.filter(dataFilter);
+    return matches.map(i => pack.getDocument(i._id));
 }
 
 async function getCompendiumItem(itemData) {
-    let fieldFilter = {'fields': ['name', 'type', 'system.description']};
+    let fieldOptions = {'fields': ['name', 'type', 'system.description']};
     let itemFilter = i => (
                 (i.name == itemData.name) && 
                 (i.system.description.value.includes(itemData.system.description.value)) &&
                 (i.type == itemData.type)
             );
 
-    return getCompendiumObject(fieldFilter, itemFilter);
+    let documents = await getCompendiumDocuments(itemCompendium, fieldOptions, itemFilter);
+    return (documents.length) ? documents[0] : undefined;
 }
 
 async function getCompendiumItemFlags(itemData) {
