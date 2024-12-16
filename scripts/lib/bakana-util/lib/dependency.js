@@ -10,8 +10,7 @@ function _activated(dependency) {
 
     if (!entity) return [false, undefined];
     if (!entity.active && isModule) return [false, undefined];
-    if (!entity.version)
-    ui.notifications.warn(`${entity} does not have a version field`);
+    if (!entity.version) ui.notifications.warn(`${entity} does not have a version field`);
 
     let [minimum, maximum] = [dependency.min, dependency.max];
     if (minimum == undefined) minimum = entity.version ?? '0.0.0';
