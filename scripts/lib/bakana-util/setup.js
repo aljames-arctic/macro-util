@@ -6,6 +6,7 @@ import { itemApi } from './lib/item.js';
 import { dependencyApi } from './lib/dependency.js';
 import { animationApi } from './lib/animations.js';
 import { genericApi } from './lib/generic.js';
+import { llmApi } from './lib/llm.js';
 
 /**
  * Removes a previously exported function or variable and exports the specifed function or variable if the macro is active.
@@ -40,4 +41,5 @@ export function setupBakanaMacros() {
   setupApiCalls({ dependsOn: dependencyApi });
   setupApiCalls({ animation: animationApi });
   setupApiCalls({ generic: genericApi });
+  setupApiCalls({ llm: llmApi });
 }
