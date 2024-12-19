@@ -2,7 +2,6 @@
 const clearTargets = false;
 const autoUpload = true;    /* Note: storing in compendium works but throws known error messages - set to false and do it manually if this concerns you */ 
 const itemCompendium = 'world.llm-modifications';    // Entry from: game.packs.filter(p => p.metadata.type == "Item").map(p => p.metadata.id)
-const notify = true; // ui.notifications if a problem occurs
 
 async function queryOptions(options) {
     let selection = options.first().value;
@@ -18,16 +17,21 @@ async function parseOptionMap(optionMap) {
       let index = arr.indexOf(item);
       return arr.slice(0, index).concat(arr.slice(index+1));
     }
+    function getItem(selection) {
+        let item = actor.items.find(i => i.name.toLowerCase() == selection);
+        // Check with an added 's' ie Claw -> Claws (per Moto Moto)
+        item = item ?? actor.items.find(i => i.name.toLowerCase() == selection + 's');
+        // Check without " Attack" ie "Morningstar Attack" -> "Morningstar" (per Christopher)
+        item = item ?? actor.items.find(i => i.name.toLowerCase() == selection.replace(" attack", "").trim());
+        return item;
+    }
     function actorHasItem(it) {
         let itemName = it.toLowerCase();
-        let hasItem = ((actor.items.find(i=>i.name.toLowerCase() == itemName)) || 
-                       (actor.items.find(i=>i.name.toLowerCase() == itemName + 's')));
+        let hasItem = getItem(itemName);
         let isCornerCase = ['melee attack', 'ranged attack'].includes(itemName);
-        if (!hasItem && !isCornerCase) {
-            let warnMessage = `Multiattack: Cannot find item ${it} on ${actor.name}.\nPlease update macroItem.flags.world['llm-parsed'], rename the attack, or add additional smarts to this script!`;
-            if (notify) ui.notifications.warn(warnMessage);
-            console.warn(warnMessage);
-        }
+        if (!hasItem && !isCornerCase)
+            ui.notifications.warn(`Multiattack: Cannot find item ${it} on ${actor.name}.\nPlease update macroItem.flags.world['llm-parsed'], rename the attack, or add additional smarts to this script!`);
+
         return hasItem || isCornerCase;
     }
               
@@ -37,7 +41,7 @@ async function parseOptionMap(optionMap) {
         let initialOption = await queryOptions(options);
         let selection = initialOption.toLowerCase();
 
-        let attackItem = actor.items.getName(selection) ?? actor.items.getName(selection + 's');
+        let attackItem = getItem(selection);
         if (!attackItem) {
           if (['melee attack', 'ranged attack'].includes(selection)) {
             let type = (selection == 'melee attack') ? 'mwak' : 'rwak';
@@ -45,12 +49,15 @@ async function parseOptionMap(optionMap) {
             let options = attacks.map(a => {return {value : a, label : a}}); // attacks CPR options format
             if (options.size) {
                 selection = await queryOptions(options);
-                attackItem = actor.items.getName(selection) ?? actor.items.getName(selection + 's');
+                attackItem = getItem(selection.toLowerCase());
+            } else {
+                ui.notification.warn(`Multiattack: Could not find a valid ${selection}.`);
+                attackItem = undefined;
             }
           }
         }
 
-        await MidiQOL.completeItemUse(attackItem, {}, {ignoreUserTargets: clearTargets, workflowOptions : {targetConfirmation : "always"}});
+        if (attackItem) await MidiQOL.completeItemUse(attackItem, {}, {ignoreUserTargets: clearTargets, workflowOptions : {targetConfirmation : "always"}});
 
         // Nonsense to reduce the optionMap by one attack, clearing any options that are invalid
         optionMap = optionMap
