@@ -1,12 +1,20 @@
 /* Example usages of framework
  *
+ *  * >>  An item, allowed to be used up to 1 times per turn (the most common use case)
+ * if (!macroUtil.combat.isAllowed(actor, macroItem, macroItem.name)) return;
+ *   < Additional checks made to make sure the item will be used >
+ * await macroUtil.combat.setInfo(macroItem, macroItem.name);
+ *   < Do item stuff >
+ * 
  * >>  An item, allowed to be used up to 3 times per round, but only on other token's turns
  * if (!macroUtil.combat.isAllowed(actor, macroItem, macroItem.name, {frequency = "round", restriction = "other", allowed = 3})) return;
+ *   < Additional checks made to make sure the item will be used >
  * await macroUtil.combat.setInfo(macroItem, macroItem.name);
  *   < Do item stuff >
  * 
  * >> An item, allowed to be used once per combat, but only on your own turn
  * * if (!macroUtil.combat.isAllowed(actor, macroItem, macroItem.name, {frequency = "combat", restriction = "own", allowed = 1})) return;
+ *   < Additional checks made to make sure the item will be used >
  * await macroUtil.combat.updateInfo(macroItem, macroItem.name);
  *   < Do item stuff >
  * 
