@@ -13,7 +13,7 @@ function config(workflow, cfgs, opts) {
 //    https://github.com/MotoMoto1234/Midi-Wiki/wiki/Tutorials-‐-How-to-Make-CPR-Actions-in-Token-Action-Hud
 //---------------------------------------------------------------------------------------------------------------
 
-async function syntheticItem(itemData, actor, updates = {}, forceRecreate = false) {
+async function synthetic(actor, itemData, updates = {}, forceRecreate = false) {
     let item;
     foundry.utils.mergeObject(updates, { 'flags.world.syntheticItem': true });
 
@@ -33,13 +33,13 @@ async function syntheticItem(itemData, actor, updates = {}, forceRecreate = fals
     return foundry.utils.mergeObject(item, updates);
 }
 
-async function syntheticItemDataRoll(itemData, actor, targets, { options = {}, config = {} } = {}) {
+async function syntheticDataRoll(actor, itemData, targets, { options = {}, config = {} } = {}) {
     // Scraped from chrisPremades 08/24/2024 : utils.workflowUtils.syntheticItemDataRoll
     let item = await syntheticItem(itemData, actor);
     return await syntheticItemRoll(item, targets, { options, config });
 }
 
-async function syntheticItemRoll(item, targets, { options = {}, config = {} } = {}) {
+async function syntheticRoll(item, targets, { options = {}, config = {} } = {}) {
     if (macroUtil.dependsOn.isActivated({ id: 'chris-premades', min: '0.12.27' }))
         return chrisPremades.utils.workflowUtils.syntheticItemRoll(item, targets, { options: options, config: config });
     else {
@@ -69,8 +69,8 @@ const preItemRoll = {
 };
 
 export const itemApi = {
-    syntheticItem,
-    syntheticItemRoll,
-    syntheticItemDataRoll,
+    synthetic,
+    syntheticRoll,
+    syntheticDataRoll,
     preItemRoll,
 };
