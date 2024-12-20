@@ -45,12 +45,12 @@ function _update(combatInfo) {
 }
 
 function _isSameTurn(combatInfo) {
-    if (!macroUtil.combat.isSameRound(combatInfo)) return false;
+    if (!_isSameRound(combatInfo)) return false;
     return combatInfo?.turn.id == game.combat?.turn;
 }
 
 function _isSameRound(combatInfo) {
-    if (!macroUtil.combat.isSameCombat(combatInfo)) return false;
+    if (!_isSameCombat(combatInfo)) return false;
     return combatInfo?.round.id == game.combat.round;
 }
 
@@ -79,9 +79,9 @@ function isAllowed(token, document, id, {frequency = "turn", restriction = "none
     }
 
     switch (frequency) {
-        case "combat":  return !_isSameCombat(specificInfo) || (specificInfo.combat.count < allowed);
-        case "round":   return !_isSameRound(specificInfo)  || (specificInfo.round.count  < allowed);
-        case "turn":    return !_isSameTurn(specificInfo)   || (specificInfo.turn.count   < allowed);
+        case "combat":  return (!_isSameCombat(specificInfo)) || (specificInfo.combat?.count < allowed);
+        case "round":   return (!_isSameRound(specificInfo))  || (specificInfo.round?.count  < allowed);
+        case "turn":    return (!_isSameTurn(specificInfo))   || (specificInfo.turn?.count   < allowed);
         default: throw(`Unknown frequency: ${frequency}`);
     }
 }
