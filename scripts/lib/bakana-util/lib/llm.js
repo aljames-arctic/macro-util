@@ -1,4 +1,9 @@
-async function _prompt(prompt, input) { 
+async function _prompt(prompt, input) {
+    if (!macroUtil.llm.key) {
+        ui.notifications.error('LLM Key not set! You need to run macroUtil.llm.key = "sk-proj-abcde12345" (but with an actual key)');
+        throw('No LLM key installed.');
+    }
+
     // Step 1: Parse the Multiattack description to extract potential attacks
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
@@ -21,13 +26,8 @@ async function _prompt(prompt, input) {
 }
 
 async function prompt(prompt, input) {
-    if (!macroUtil.llm.key) {
-        ui.notifications.error('LLM Key not set! You need to run macroUtil.llm.key = "sk-proj-abcde12345" (but with an actual key)');
-        return;
-    }
     let data = await _prompt(prompt, input);
     if (!data.choices || !data.choices[0]) throw("Invalid response from OpenAI API:", data);
-  
     return JSON.parse(data.choices[0].message.content.trim());
 }
 
