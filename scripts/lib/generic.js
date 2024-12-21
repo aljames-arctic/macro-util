@@ -17,7 +17,12 @@ async function remove(entity) {
     if (config && typeIs) await MidiQOL.socket().executeAsGM(typeIs, config);
 }
 
+async function wait(ms) { 
+    return new Promise(resolve => { setTimeout(resolve, ms); });
+}
+
 export const genericApi = { 
     remove,
-    hasPermission
+    hasPermission,
+    wait
 };

@@ -5,7 +5,9 @@ import { effectsApi } from './lib/effect.js';
 import { genericApi } from './lib/generic.js';
 import { itemApi } from './lib/item.js';
 import { llmApi } from './lib/llm.js';
+import { moduleApi } from './lib/modules.js'
 import { templateApi } from './lib/template.js';
+import { tokenApi } from './lib/token.js';
 import { workflowApi } from './lib/workflow.js';
 
 /**
@@ -41,7 +43,9 @@ function setupMacroUtil() {
   setupApiCalls({ generic: genericApi });
   setupApiCalls({ item: itemApi });
   setupApiCalls({ llm: llmApi });
+  setupApiCalls({ module: moduleApi });
   setupApiCalls({ template: templateApi });
+  setupApiCalls({ token: tokenApi });
   setupApiCalls({ workflow: workflowApi })
 }
 
