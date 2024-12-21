@@ -26,7 +26,7 @@ async function isDamaged() {
     if (workflow.damageItem.oldHP == 0) return;
     if (workflow.damageItem.oldHP != workflow.damageItem.hpDamage) return;
 
-    const syntheticMacroItem = await macroUtil.item.syntheticItem(macroItem, actor, {callee : workflow.id});
+    const syntheticMacroItem = await macroUtil.item.synthetic(actor, macroItem, {callee : workflow.id});
     await MidiQOL.completeItemUse(syntheticMacroItem, {}, {});
     await macroItem.update({'system.uses.value': macroItem.system.uses.value + 1});
 

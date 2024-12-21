@@ -113,6 +113,7 @@ async function createCompendiumItem(item) {
 
 const macroItemDescription = macroItem.system.description.value.replace(/(<([^>]+)>)/gi, "");
 try {
+    macroUtil.dependsOn.required({ id: 'chris-premades', min: '0.12.27' });
     let LLM = macroItem.getFlag('world', 'llm-multiattack');
     if (!LLM) {
         // Fallback #1 - Fetch from compendium

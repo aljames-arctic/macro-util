@@ -1,11 +1,9 @@
 async function synthetic(actor, itemData, updates = {}, mergeOptions, forceRecreate = false) {
     let item = itemData;
-    foundry.utils.mergeObject(updates, { 'flags.world.syntheticItem': true });
+    foundry.utils.mergeObject(updates, { 'flags.world.synthetic': true });
 
-    if (itemData.flags?.world?.syntheticItem && itemData.parent == actor && !forceRecreate) {
+    if (itemData.flags?.world?.synthetic && itemData.parent == actor && !forceRecreate) {
         /* nothing to do */
-    } else if (macroUtil.dependsOn.isActivated({ id: 'chris-premades', min: '0.12.27' })) {
-        item = await chrisPremades.utils.itemUtils.syntheticItem(itemData, actor);
     } else {
         // Scraped from CPR 08/24/2024
         item = new CONFIG.Item.documentClass(itemData, { parent: actor });
@@ -19,5 +17,5 @@ async function synthetic(actor, itemData, updates = {}, mergeOptions, forceRecre
 }
 
 export const itemApi = {
-    syntheticItem
+    synthetic
 };

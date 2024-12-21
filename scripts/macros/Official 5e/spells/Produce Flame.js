@@ -6,7 +6,7 @@ async function preTargeting() {
     let produceFlameEffect = macroItem.effects.find((ef) => ef.name == 'Produce Flame');
     if (!workflow.targets.size) {
         const updates = { system: { target: { value: null, units: null, type: 'self' } } };
-        workflow.item = await macroUtil.item.syntheticItem(workflow.item, actor, updates);
+        workflow.item = await macroUtil.item.synthetic(actor, workflow.item, updates);
         produceFlameEffect.update({ disabled: !produceFlameEffect.disabled });
     }
 }

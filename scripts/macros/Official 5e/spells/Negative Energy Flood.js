@@ -18,7 +18,7 @@ async function preDamageRoll() {
         'system.save.scaling'   : 'flag',
     };
 
-    workflow.item = await macroUtil.item.syntheticItem(workflow.item, actor, updates);
+    workflow.item = await macroUtil.item.synthetic(actor, workflow.item, updates);
 }
 
 async function preDamageApplication() {

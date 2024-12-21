@@ -81,6 +81,7 @@ async function offEffect() {
 */
 
 try {
+    macroUtil.dependsOn.required({ id: 'chris-premades', min: '0.12.27' });
     if (args[0] == 'on') await onEffect();
     if (args[0] == 'off') await offEffect();
 } catch(e) { console.error(e); }
