@@ -121,7 +121,7 @@ try {
         if (LLM.first) LLM = undefined;
         // Fallback #2 - Call LLM
         let fromCompendium = !!(LLM);
-        if (!LLM) LLM = await macroUtil.llm.prompt(macroUtil.llm.multiattack, macroItemDescription);
+        if (!LLM) LLM = await macroUtil.llm.prompt(macroUtil.llm.constant.multiattack, macroItemDescription);
         if (!LLM) throw('Cannot read LLM! Not saving');
         await macroItem.setFlag('world', 'llm-multiattack', LLM);
         if (!fromCompendium) await createCompendiumItem(macroItem);

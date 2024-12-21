@@ -1,3 +1,5 @@
+import {multiattack} from '../constants/llm-multiattack.js';
+
 async function _prompt(prompt, input) {
     if (!macroUtil.llm.key) {
         ui.notifications.error('LLM Key not set! You need to run macroUtil.llm.key = "sk-proj-abcde12345" (but with an actual key)');
@@ -31,6 +33,7 @@ async function prompt(prompt, input) {
     return JSON.parse(data.choices[0].message.content.trim());
 }
 
-export const llmApi = { 
+export const llmApi = {
+    constant : {multiattack},
     prompt,
 };
