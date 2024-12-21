@@ -38,9 +38,9 @@ function _update(combatInfo) {
     updates.round.count++;
     updates.combat.count++;
     
-    if (updates?.turn.id != game.combat?.turn) updates.turn.count--;
-    if (updates?.round.id != game.combat?.round) updates.round.count--;
-    if (updates?.combat.id != game.combat?.id) updates.combat.count--;
+    if (updates?.turn.id != game.combat?.turn) updates.turn = {id: game.combat.turn, count: 1};
+    if (updates?.round.id != game.combat?.round) updates.round = {id: game.combat.round, count: 1};
+    if (updates?.combat.id != game.combat?.id) updates.combat = {id: game.combat.id, count: 1};
     return updates;
 }
 
