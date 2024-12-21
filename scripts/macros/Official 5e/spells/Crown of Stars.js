@@ -30,16 +30,7 @@ async function offEffect() {
     await actor.unsetFlag('world', `${macroItem.name}`);
 }
 
-const callArguments = {
-    speaker     : speaker,
-    actor       : actor,
-    token       : token,
-    character   : character,
-    item        : item,
-    args        : args,
-    scope       : scope,
-};
-await macroUtil.runWorkflows(callArguments, {
-    on  : onEffect,
-    off : offEffect,
-});
+try {
+    let states = {on: onEffect, off: offEffect};
+    await states[args[0]]();
+} catch(e) { console.error(e); }

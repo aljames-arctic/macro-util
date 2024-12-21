@@ -21,15 +21,7 @@ async function postPreambleComplete() {
     game.user.updateTokenTargets(targetSet.map(t => t.id));
 }
 
-const callArguments = {
-    speaker     : speaker,
-    actor       : actor,
-    token       : token,
-    character   : character,
-    item        : item,
-    args        : args,
-    scope       : scope,
-};
-await macroUtil.runWorkflows(callArguments, {
-    postPreambleComplete : postPreambleComplete
-});
+try {
+    let states = { postPreambleComplete };
+    await states[workflow.macroPass]();
+} catch(e) { console.error(e); }

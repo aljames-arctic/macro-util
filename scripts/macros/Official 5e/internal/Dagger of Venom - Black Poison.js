@@ -7,15 +7,7 @@ async function postActiveEffects() {
     await enableEffect.update({ disabled: false });
 }
 
-const callArguments = {
-    speaker     : speaker,
-    actor       : actor,
-    token       : token,
-    character   : character,
-    item        : item,
-    args        : args,
-    scope       : scope,
-};
-await macroUtil.runWorkflows(callArguments, {
-    postActiveEffects   : postActiveEffects,
-});
+try {
+    let states = { postActiveEffects };
+    await states[workflow.macroPass]();
+} catch(e) { console.error(e); }

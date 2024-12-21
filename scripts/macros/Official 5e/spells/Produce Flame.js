@@ -22,17 +22,7 @@ async function postAttackRoll() {
     if (produceFlameEffect) produceFlameEffect.update({ disabled: true });
 }
 
-const callArguments = {
-    speaker     : speaker,
-    actor       : actor,
-    token       : token,
-    character   : character,
-    item        : item,
-    args        : args,
-    scope       : scope,
-};
-await macroUtil.runWorkflows(callArguments, {
-    preTargeting    : preTargeting,
-    preItemRoll     : preItemRoll,
-    postAttackRoll  : postAttackRoll,
-});
+try {
+    let states = { preTargeting, preItemRoll, postAttackRoll };
+    await states[workflow.macroPass]();
+} catch(e) { console.error(e); }

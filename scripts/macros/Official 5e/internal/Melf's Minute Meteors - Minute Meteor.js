@@ -20,16 +20,8 @@ async function postDamageRoll() {
 }
 
 let remainingStars = actor.getFlag('world', originName);
-const callArguments = {
-    speaker     : speaker,
-    actor       : actor,
-    token       : token,
-    character   : character,
-    item        : item,
-    args        : args,
-    scope       : scope,
-};
-await macroUtil.runWorkflows(callArguments, {
-    postDamageRoll  : postDamageRoll,
-});
+try {
+    let states = { postDamageRoll };
+    await states[workflow.macroPass]();
+} catch(e) { console.error(e); }
 await actor.setFlag('world', originName, remainingStars);

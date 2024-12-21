@@ -35,17 +35,7 @@ async function isDamaged() {
     if (hasSaved) workflow.damageItem.hpDamage -= 1;
 }
 
-const callArguments = {
-    speaker     : speaker,
-    actor       : actor,
-    token       : token,
-    character   : character,
-    item        : item,
-    args        : args,
-    scope       : scope,
-};
-await macroUtil.runWorkflows(callArguments, {
-    isDamaged   : isDamaged,
-    preItemRoll : preItemRoll,
-    postSave    : postSave,
-});
+try {
+    let states = { isDamaged, preItemRoll, postSave};
+    await states[workflow.macroPass]();
+} catch(e) { console.error(e); }

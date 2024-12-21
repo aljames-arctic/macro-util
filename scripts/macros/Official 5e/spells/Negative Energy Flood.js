@@ -39,17 +39,11 @@ async function offEffect() {
     else await actor.transformInto(zombie, {}, { renderSheet: false });
 }
 
-const callArguments = {
-    speaker     : speaker,
-    actor       : actor,
-    token       : token,
-    character   : character,
-    item        : item,
-    args        : args,
-    scope       : scope,
-};
-await macroUtil.runWorkflows(callArguments, {
-    preDamageRoll           : preDamageRoll,
-    preDamageApplication    : preDamageApplication,
-    off                     : offEffect,
-});
+try {
+    if (typeof workflow == "undefined") {
+        if (args[0] == 'off') await offEffect();
+    } else {
+        let states = { preDamageRoll, preDamageApplication };
+        await states[workflow.macroPass]();
+    }
+} catch(e) { console.error(e); }

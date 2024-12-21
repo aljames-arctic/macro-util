@@ -160,28 +160,13 @@ async function postDamageRoll() {
     let piercingDamage = workflow.damageRolls.filter((roll) => roll?.options.type == 'piercing');
     if (!piercingDamage.length) return;
 
-    if (macroUtil.combat.isSameTurn(persistentData.combat)) return;
+    if (!macroUtil.combat.isAllowed(token, macroItem, macroItem.name)) return;
     if (!(await reroll(workflow.damageRolls))) return;
 
-    persistentData.combat = macroUtil.combat.getCombatInfo();
+    await macroUtil.combat.updateInfo(macroItem, macroItem.name);
 }
 
-const persistentDataName = `Piercer`;
-const defaultPersistentData = { combat: {} };
-let persistentData = (await DAE.getFlag(actor, persistentDataName)) ?? defaultPersistentData;
-
-const callArguments = {
-    speaker     : speaker,
-    actor       : actor,
-    token       : token,
-    character   : character,
-    item        : item,
-    args        : args,
-    scope       : scope,
-};
-await macroUtil.runWorkflows(callArguments, {
-    preDamageRollComplete   : preDamageRollComplete, // damage die additions
-    postDamageRoll          : postDamageRoll, // damage die replacement effect
-});
-
-await DAE.setFlag(actor, persistentDataName, persistentData);
+try {
+    let states = { preDamageRollComplete, postDamageRoll};
+    await states[workflow.macroPass]();
+} catch(e) { console.error(e); }
