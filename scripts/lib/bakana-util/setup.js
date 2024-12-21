@@ -42,4 +42,5 @@ export function setupBakanaMacros() {
   setupApiCalls({ animation: animationApi });
   setupApiCalls({ generic: genericApi });
   setupApiCalls({ llm: llmApi });
+  setupApiCalls({ workflow: workflowApi })
 }
