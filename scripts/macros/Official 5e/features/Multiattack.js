@@ -114,11 +114,11 @@ async function createCompendiumItem(item) {
 const macroItemDescription = macroItem.system.description.value.replace(/(<([^>]+)>)/gi, "");
 try {
     let LLM = macroItem.getFlag('world', 'llm-multiattack');
-    if (LLM.first) LLM = undefined;
+    if (LLM?.first) LLM = undefined;
     if (!LLM) {
         // Fallback #1 - Fetch from compendium
         LLM = await getCompendiumItemFlags(macroItem);
-        if (LLM.first) LLM = undefined;
+        if (LLM?.first) LLM = undefined;
         // Fallback #2 - Call LLM
         let fromCompendium = !!(LLM);
         if (!LLM) LLM = await macroUtil.llm.prompt(macroUtil.llm.constant.multiattack, macroItemDescription);
