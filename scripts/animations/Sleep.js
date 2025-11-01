@@ -11,7 +11,7 @@ function create(token, { id = 'Sleep' } = {}) {
         .scaleIn(0, 500, {ease: "easeOutQuint"})
         .fadeOut(1000)
         .atLocation(token)
-        .attachTo(token, {followRotation: false, bindAlpha: false})
+        .attachTo(token, {bindRotation: false, bindAlpha: false})
         .persist()
         .scaleToObject(2)
 

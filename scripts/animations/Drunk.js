@@ -27,7 +27,7 @@ function create(token, { id = 'Drunk' } = {}) {
             .loopProperty("sprite", "height", { from: 0, to: 0.1, duration: 6000, pingPong: false, gridUnits: true, ease: "easeOutCubic" })
             .loopProperty("alphaFilter", "alpha", { values: [-1, 1, 1, 1, 1, -1], duration: 1000, pingPong: true, ease: "easeOutCubic" })
             .persist()
-            .attachTo(token, { bindAlpha: false, followRotation: false })
+            .attachTo(token, { bindAlpha: false, bindRotation: false })
             .private();
     });
 
@@ -37,7 +37,7 @@ function create(token, { id = 'Drunk' } = {}) {
         .opacity(0)
 
         .effect()
-        .from(token)
+        .copySprite(token)
         .name(`${id} ${token.id}`)
         .atLocation(token)
         .loopProperty("sprite", "position.y", { values: [0, 20, 0, 20], duration: 2500, pingPong: true, ease: "easeInOutSine" })
