@@ -8,6 +8,9 @@ import { itemApi } from './lib/item.js';
 import { llmApi } from './lib/llm.js';
 import { moduleApi } from './lib/modules.js'
 import { templateApi } from './lib/template.js';
+// Import module settings
+import './settings.js';
+
 import { tokenApi } from './lib/token.js';
 import { workflowApi } from './lib/workflow.js';
 
@@ -48,7 +51,7 @@ function setupMacroUtil() {
   setupApiCalls({ module: moduleApi });
   setupApiCalls({ template: templateApi });
   setupApiCalls({ token: tokenApi });
-  setupApiCalls({ workflow: workflowApi })
+  setupApiCalls({ workflow: workflowApi });
 }
 
 Hooks.once('ready', async function() {

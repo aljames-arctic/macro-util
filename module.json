@@ -16,7 +16,38 @@
     }
   ],
   "esmodules": [
-    "scripts/setup.js"
+    "src/module.js"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json"
+    }
+  ],
+  "settings": [
+    {
+      "key": "llmProvider",
+      "name": "LLM Provider",
+      "hint": "The LLM provider to use.",
+      "scope": "world",
+      "config": true,
+      "type": "String",
+      "choices": {
+        "gemini": "Gemini",
+        "openai": "OpenAI"
+      },
+      "default": "gemini"
+    },
+    {
+      "key": "llmApiKey",
+      "name": "LLM API Key",
+      "hint": "The API key for the selected LLM provider.",
+      "scope": "world",
+      "config": true,
+      "type": "String",
+      "default": ""
+    }
   ],
   "url": "#{URL}#",
   "manifest": "#{MANIFEST}#",

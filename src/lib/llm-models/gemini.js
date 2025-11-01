@@ -1,0 +1,95 @@
+/*
+You can get a Gemini API key from Google AI Studio. Here's how:
+    1. Go to Google AI Studio (https://aistudio.google.com/api-keys).
+    2. Sign in with your Google account.
+    3. Click the "Get API key" button in the top left.
+    4. Click "Create API key" button in the top right.
+
+Copy your generated API key to the module settings.
+*/
+
+/**
+ * Sends a prompt to the Gemini API.
+ * @param {string} [prompt] The system prompt.
+ * @param {string} input The user prompt.
+ * @returns {Promise<object>} The response from the API.
+ * @private
+ */
+async function _prompt(prompt, input) {
+    const requestBody = {
+        contents: [
+            {
+                parts: [
+                    { text: input }
+                ]
+            }
+        ],
+        generationConfig: {
+            temperature: 0,
+            maxOutputTokens: 1000,
+        }
+    };
+
+    if (prompt) {
+        requestBody.systemInstruction = {
+            parts: [
+                { text: prompt }
+            ]
+        };
+    }
+
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-latest:generateContent`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "x-goog-api-key": macroUtil.llm.key,
+        },
+        body: JSON.stringify(requestBody),
+    });
+
+    return response.json();
+}
+
+/**
+ * Sends a prompt to the Gemini API and parses the response.
+ * @param {string} prompt The system prompt or user prompt if input is not provided.
+ * @param {string} [input] The user prompt.
+ * @returns {Promise<object>} The parsed response from the API.
+ */
+async function prompt(prompt, input) {
+    let systemPrompt = prompt;
+    let userInput = input;
+    if (input === undefined) {
+        systemPrompt = undefined;
+        userInput = prompt;
+    }
+
+    let data = await _prompt(systemPrompt, userInput);
+    if (!data.candidates || !data.candidates[0]) {
+        console.error("Invalid response from Gemini API:", data);
+        throw new Error("Invalid response from Gemini API");
+    }
+    return data.candidates[0].content.parts[0].text.trim();
+}
+
+async function listModels() {
+    if (!macroUtil.llm.key) {
+        ui.notifications.error('LLM Key not set! You need to run macroUtil.llm.key = "YOUR_API_KEY"');
+        throw('No LLM key installed.');
+    }
+
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "x-goog-api-key": macroUtil.llm.key,
+        },
+    });
+
+    return response.json();
+}
+
+export const gemini = {
+    prompt,
+    listModels,
+};

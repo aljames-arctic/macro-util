@@ -1,5 +1,3 @@
-import {multiattack} from '../constants/llm-multiattack.js';
-
 /**
  * Sends a prompt to the OpenAI API.
  * @param {string} prompt The system prompt.
@@ -8,12 +6,6 @@ import {multiattack} from '../constants/llm-multiattack.js';
  * @private
  */
 async function _prompt(prompt, input) {
-    if (!macroUtil.llm.key) {
-        ui.notifications.error('LLM Key not set! You need to run macroUtil.llm.key = "sk-proj-abcde12345" (but with an actual key)');
-        throw('No LLM key installed.');
-    }
-
-    // Step 1: Parse the Multiattack description to extract potential attacks
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -46,7 +38,6 @@ async function prompt(prompt, input) {
     return JSON.parse(data.choices[0].message.content.trim());
 }
 
-export const llmApi = {
-    constant : {multiattack},
+export const openai = {
     prompt,
 };
