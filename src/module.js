@@ -1,5 +1,5 @@
 import { actorApi } from './lib/actor.js';
-import { animationApi } from './lib/animations.js';
+import { animationApi } from './animations/animations.js';
 import { combatApi } from './lib/combat.js';
 import { dependencyApi } from './lib/dependency.js';
 import { effectsApi } from './lib/effect.js';

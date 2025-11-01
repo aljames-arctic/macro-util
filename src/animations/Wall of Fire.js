@@ -14,9 +14,6 @@ async function create({ id = 'Wall of Fire' } = {}) {
     // Use Portal to get a ray for a more intuitive user experience
     const wallRay = await Portal.getRay();
 
-    // Use a single 'ray' crosshair for a more intuitive user experience
-    const wallRay = await warpgate.crosshairs.show(crosshairConfig, { show: 'ray' });
-
     if (wallRay.cancelled) {
     // Portal.getRay() returns null on cancellation
     if (!wallRay) {
@@ -33,6 +30,7 @@ async function create({ id = 'Wall of Fire' } = {}) {
             .scale(1.5)
             .stretchTo({ x: wallRay.x + wallRay.dx, y: wallRay.y + wallRay.dy })
         .play();
+    }
 }
 
 async function destroy({ id = 'Wall of Fire' } = {}) {
