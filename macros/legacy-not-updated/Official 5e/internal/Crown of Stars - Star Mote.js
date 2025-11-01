@@ -8,7 +8,7 @@ const effectUniqueName = `[${actor.id}] Crown of Stars`;
 async function postAttackRoll() {
     const randomIndex = Math.floor(Math.random() * remainingStars.length);
     let randomStar = remainingStars[randomIndex];
-    await macroUtil.animation.crownOfStars.remove(token, { id: effectUniqueName }, randomStar);
+    await macroUtil.animation.crownOfStars.remove(token, randomStar, { id: effectUniqueName });
 
     remainingStars[randomIndex] = remainingStars[remainingStars.length - 1];
     remainingStars.pop();

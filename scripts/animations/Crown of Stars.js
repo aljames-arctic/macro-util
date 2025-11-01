@@ -52,7 +52,7 @@ function create(token, moteCount, { effect = undefined, id = 'Crown of Stars', f
     starsSequence.play();
 }
 
-async function remove(token, { id = 'Crown of Stars' } = {}, idx) {
+async function remove(token, idx, { id = 'Crown of Stars' } = {}) {
     return Sequencer.EffectManager.endEffects({ name: `${id} - ${idx}`, objects: token });
 }
 
