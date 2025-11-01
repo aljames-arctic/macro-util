@@ -53,7 +53,14 @@ function create(token, moteCount, { effect = undefined, id = 'Crown of Stars', f
 }
 
 async function remove(token, idx, { id = 'Crown of Stars' } = {}) {
-    return Sequencer.EffectManager.endEffects({ name: `${id} - ${idx}`, objects: token });
+    // Remove specified index (we excluded idx == 0 in our creation)
+    if (idx) { return Sequencer.EffectManager.endEffects({ name: `${id} - ${idx}`, objects: token }); }
+    const effects = Sequencer.EffectManager.getEffects({ name: `${id} - *`, objects: token });
+    // Otherwise return a random index from the remaining entries
+    if (!effects.length) return;
+    const randIdx = Math.floor(Math.random() * effects.length);
+    const effect = effects[randIdx].data
+    if (effects.length > 0) { return Sequencer.EffectManager.endEffects({ name: effect.name, objects: token }); }
 }
 
 async function destroy(token, { id = 'Crown of Stars' } = {}) {
