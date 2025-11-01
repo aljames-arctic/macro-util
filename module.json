@@ -1,13 +1,13 @@
 {
   "id": "macro-util",
   "title": "Macro Utility!? Bakana!",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "compatibility": {
-    "minimum": "12",
-    "verified": "12",
-    "maximum": "12"
+    "minimum": "13",
+    "verified": "13",
+    "maximum": "13"
   },
-  "description": "A growing collection of macros and macro utility functions for use with Midi-QOL.",
+  "description": "<p>A growing collection of macros and macro utility functions for use with Midi-QOL.</p>",
   "authors": [
     {
       "name": "Bakana Baka",
@@ -40,61 +40,5 @@
       }
     ]
   },
-  "packs": [
-    {
-      "name": "internal",
-      "label": "Internal",
-      "path": "packs/internal",
-      "type": "Item",
-      "system": "dnd5e",
-      "ownership": {
-        "PLAYER": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      }
-    },
-    {
-      "name": "items-official-5e",
-      "label": "Items - Official 5e",
-      "path": "packs/items-official-5e",
-      "type": "Item",
-      "system": "dnd5e",
-      "ownership": {
-        "PLAYER": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      }
-    },
-    {
-      "name": "features-official-5e",
-      "label": "Features - Official 5e",
-      "path": "packs/features-official-5e",
-      "type": "Item",
-      "system": "dnd5e",
-      "ownership": {
-        "PLAYER": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      }
-    },
-    {
-      "name": "world-scripts",
-      "label": "World Scripts",
-      "path": "packs/world-scripts",
-      "type": "Macro",
-      "system": "dnd5e",
-      "ownership": {
-        "PLAYER": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      }
-    },
-    {
-      "name": "spells-official-5e",
-      "label": "Spells - Official 5e",
-      "path": "packs/spells-official-5e",
-      "type": "Item",
-      "ownership": {
-        "PLAYER": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      },
-      "system": "dnd5e"
-    }
-  ]
+  "flags": {}
 }
