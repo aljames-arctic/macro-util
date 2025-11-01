@@ -1,38 +1,45 @@
 async function create({ id = 'Wall of Fire' } = {}) {
-    let config = {
-        size:1,
-        icon: 'icons/commodities/materials/feather-orange.webp',
-        label: 'start of wall',
-        tag: 'firewall',
-        t: 'circle',
-        drawIcon: true,
-        drawOutline: true,
-        interval:-1,
-        rememberControlled: true,
+    // Dependency checks for robustness
+    if (!macroUtil.dependsOn.hasRecommended({ id: 'sequencer' })) return;
+    if (!macroUtil.dependsOn.hasSomeRecommended([{ id: 'jb2a_patreon' }, { id: 'JB2A_DnD5e' }])) return;
+
+    const crosshairConfig = {
+        size: 1,
+        icon: 'icons/magic/fire/flame-burning-fist-orange.webp',
+        label: 'Wall of Fire',
+        tag: 'wall-of-fire-placement',
+        drawIcon: false,
+        drawOutline: false,
+    };
+    // Use Portal to get a ray for a more intuitive user experience
+    const wallRay = await Portal.getRay();
+
+    // Use a single 'ray' crosshair for a more intuitive user experience
+    const wallRay = await warpgate.crosshairs.show(crosshairConfig, { show: 'ray' });
+
+    if (wallRay.cancelled) {
+    // Portal.getRay() returns null on cancellation
+    if (!wallRay) {
+        return;
     }
-    
-    let start = await Sequencer.Crosshair.show(config);
-    let template = await macroUtil.template.circle(start,60);
-    config.label = 'end of wall'
-    let end = await Sequencer.Crosshair.show(config);
-    await template.delete();
-        
-    new Sequence()
+
+    // Create and play the animation, returning the sequence
+    return new Sequence()
         .effect()
-        .file("jb2a.energy_wall.01.25x05ft.01.complete.orange")
-        .atLocation(start)
-        .name(id)
-        .persist()
-        .scale(1.5)
-        .stretchTo(end)
-        .play()
+            .file("jb2a.energy_wall.01.25x05ft.01.complete.orange")
+            .atLocation({ x: wallRay.x, y: wallRay.y })
+            .name(id)
+            .persist()
+            .scale(1.5)
+            .stretchTo({ x: wallRay.x + wallRay.dx, y: wallRay.y + wallRay.dy })
+        .play();
 }
 
 async function destroy({ id = 'Wall of Fire' }) {
-    Sequencer.EffectManager.endEffects({ name: id });
+    return Sequencer.EffectManager.endEffects({ name: id });
 }
 
 export const wallOfFire = {
-    create  : create,
-    destroy : destroy,
+    create,
+    destroy,
 };

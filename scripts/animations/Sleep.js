@@ -1,5 +1,9 @@
 function create(token, { id = 'Sleep' } = {}) {
-    new Sequence()
+    // Dependency checks for robustness
+    if (!macroUtil.dependsOn.hasRecommended({ id: 'sequencer' })) return;
+    if (!macroUtil.dependsOn.hasSomeRecommended([{ id: 'jb2a_patreon' }, { id: 'JB2A_DnD5e' }])) return;
+
+    return new Sequence()
 
         .effect()
         .file("jb2a.sleep.symbol.dark_orangepurple")
@@ -15,10 +19,10 @@ function create(token, { id = 'Sleep' } = {}) {
 }
 
 async function destroy(token, { id = 'Sleep' }) {
-    await Sequencer.EffectManager.endEffects({ name: `${id} ${token.id}`, object: token });
+    return Sequencer.EffectManager.endEffects({ name: `${id} ${token.id}`, object: token });
 }
 
-export const drunk = {
-    create  : create,
-    destroy : destroy,
+export const sleep = {
+    create,
+    destroy,
 };

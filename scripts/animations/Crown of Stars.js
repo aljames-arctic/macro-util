@@ -21,55 +21,48 @@ function create(token, moteCount, { effect = undefined, id = 'Crown of Stars', f
         return;
     }
 
-    function createMote(sequence) {
-        sequence = sequence
+    // This helper creates and configures a single mote effect section.
+    function createMote(idx) {
+        const moteEffect = new Sequence()
             .effect()
             .file(file)
-            .from(token, { cacheLocation: true });
-
-        if (effect) sequence = sequence.tieTo(effect);
-
-        return sequence
+            .from(token, { cacheLocation: true })
             .attachTo(token)
             .scale(scale)
             .fadeIn(300)
             .fadeOut(500)
             .aboveLighting()
-            .persist();
-    }
-
-    function addRotation(sequence, objectName, delay) {
-        let config = {
-                from: 0,
-                to: 360,
-                duration: 5000,
-                delay: delay,
-            };
-        return sequence.loopProperty(objectName, 'rotation', config);
-    }
-
-    function buildMote(sequence, idx) {
-        sequence = createMote(sequence);
-        sequence = addRotation(sequence, 'sprite', 500);
-        sequence = addRotation(sequence, 'spriteContainer', 0);
-        return sequence
+            .persist()
+            .name(`${id} - ${idx}`)
             .spriteOffset({ x: radius }, { gridUnits: true })
-            .rotate((360 / moteCount) * idx)
-            .name(`${id} - ${idx}`);
+            .rotate((360 / moteCount) * idx);
+
+        // Tie to an Active Effect if one is provided
+        if (effect) {
+            moteEffect.tieTo(effect);
+        }
+
+        // Add looping rotations
+        moteEffect.loopProperty("sprite", "rotation", { from: 0, to: 360, duration: 5000, delay: 500 });
+        moteEffect.loopProperty("spriteContainer", "rotation", { from: 0, to: 360, duration: 5000, delay: 0 });
+
+        return moteEffect;
     }
 
-    let starsSequence = new Sequence();
-    for (let idx = 1; idx <= moteCount; ++idx)
-        starsSequence = buildMote(starsSequence, idx);
+    // Create a sequence and add each mote to it.
+    const starsSequence = new Sequence();
+    for (let i = 1; i <= moteCount; i++) {
+        starsSequence.addSequence(createMote(i));
+    }
     starsSequence.play();
 }
 
 async function remove(token, { id }, idx) {
-    await Sequencer.EffectManager.endEffects({ name: `${id} - ${idx}`, objects: token, });
+    return Sequencer.EffectManager.endEffects({ name: `${id} - ${idx}`, objects: token });
 }
 
 async function destroy(token, { id }) {
-    await Sequencer.EffectManager.endEffects({ name: `${id} - *`, objects: token, });
+    return Sequencer.EffectManager.endEffects({ name: `${id} - *`, objects: token });
 }
 
 export const crownOfStars = {
