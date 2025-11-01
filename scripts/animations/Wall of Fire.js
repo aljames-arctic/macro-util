@@ -1,7 +1,7 @@
 async function create({ id = 'Wall of Fire' } = {}) {
     // Dependency checks for robustness
-    if (!macroUtil.dependsOn.hasRecommended({ id: 'sequencer' })) return;
-    if (!macroUtil.dependsOn.hasSomeRecommended([{ id: 'jb2a_patreon' }, { id: 'JB2A_DnD5e' }])) return;
+    if (!macroUtil.dependsOn.required({ id: 'sequencer' })) return;
+    if (!macroUtil.dependsOn.someRequired([{ id: 'jb2a_patreon' }, { id: 'JB2A_DnD5e' }])) return;
 
     const crosshairConfig = {
         size: 1,

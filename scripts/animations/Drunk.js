@@ -1,6 +1,7 @@
 function create(token, { id = 'Drunk' } = {}) {
     // Last Updated: 4/14/2023
     // Author: EskieMoh#2969
+    if (!macroUtil.dependsOn.required({ id: 'sequencer' })) return;
 
     const sequence = new Sequence();
 
