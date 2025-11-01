@@ -35,7 +35,7 @@ async function create({ id = 'Wall of Fire' } = {}) {
         .play();
 }
 
-async function destroy({ id = 'Wall of Fire' }) {
+async function destroy({ id = 'Wall of Fire' } = {}) {
     return Sequencer.EffectManager.endEffects({ name: id });
 }
 

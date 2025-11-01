@@ -18,7 +18,7 @@ function create(token, { id = 'Sleep' } = {}) {
         .play();
 }
 
-async function destroy(token, { id = 'Sleep' }) {
+async function destroy(token, { id = 'Sleep' } = {}) {
     return Sequencer.EffectManager.endEffects({ name: `${id} ${token.id}`, object: token });
 }
 
