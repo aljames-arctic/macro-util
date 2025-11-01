@@ -15,7 +15,7 @@ Copy your generated API key to the module settings.
  * @returns {Promise<object>} The response from the API.
  * @private
  */
-async function _prompt(prompt, input) {
+async function _prompt(prompt, input, key) {
     const requestBody = {
         contents: [
             {
@@ -42,7 +42,7 @@ async function _prompt(prompt, input) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "x-goog-api-key": macroUtil.llm.key,
+            "x-goog-api-key": key,
         },
         body: JSON.stringify(requestBody),
     });
@@ -56,7 +56,7 @@ async function _prompt(prompt, input) {
  * @param {string} [input] The user prompt.
  * @returns {Promise<object>} The parsed response from the API.
  */
-async function prompt(prompt, input) {
+async function prompt(prompt, input, key = game.settings.get('macro-util', 'geminiApiKey')) {
     let systemPrompt = prompt;
     let userInput = input;
     if (input === undefined) {
@@ -64,7 +64,7 @@ async function prompt(prompt, input) {
         userInput = prompt;
     }
 
-    let data = await _prompt(systemPrompt, userInput);
+    let data = await _prompt(systemPrompt, userInput, key);
     if (!data.candidates || !data.candidates[0]) {
         console.error("Invalid response from Gemini API:", data);
         throw new Error("Invalid response from Gemini API");
@@ -72,17 +72,14 @@ async function prompt(prompt, input) {
     return data.candidates[0].content.parts[0].text.trim();
 }
 
-async function listModels() {
-    if (!macroUtil.llm.key) {
-        ui.notifications.error('LLM Key not set! You need to run macroUtil.llm.key = "YOUR_API_KEY"');
-        throw('No LLM key installed.');
-    }
+async function listModels(key = game.settings.get('macro-util', 'geminiApiKey')) {
+    macroUtil.dependsOn.moduleSetting(`llmApiKey`, "");
 
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            "x-goog-api-key": macroUtil.llm.key,
+            "x-goog-api-key": key,
         },
     });
 

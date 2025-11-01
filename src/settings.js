@@ -11,20 +11,41 @@ Hooks.once('init', function() {
             'openai': 'OpenAI',
         },
         default: 'gemini',
+        onChange: (value) => {
+            console.log(`Switched to ${value}`)
+            const gemini = game.settings.settings.get(`macro-util.geminiApiKey`);
+            const openai = game.settings.settings.get(`macro-util.openaiApiKey`);
+            const active = game.settings.settings.get(`macro-util.${value}ApiKey`);
+
+            gemini.config = false;
+            openai.config = false;
+            active.config = true;
+        },
     });
 
-    game.settings.register('macro-util', 'llmApiKey', {
-        name: 'LLM API Key',
-        hint: 'Enter your API key for the selected LLM provider.',
+    game.settings.register('macro-util', 'geminiApiKey', {
+        name: 'Gemini API Key',
+        hint: 'Enter your API key for Gemini.',
         scope: 'world',
-        config: true,
+        config: (game.settings.get('macro-util', 'llmProvider') == 'gemini'),
         type: String,
         default: '',
         restricted: true,
-        // This makes the input a password field
         onChange: (value) => {
-            // You might want to add some validation or encryption here
-            console.log('LLM API Key changed:', value ? 'Set' : 'Unset');
+            console.log('Gemini API Key changed:', value ? 'Set' : 'Unset');
+        },
+    });
+
+    game.settings.register('macro-util', 'openaiApiKey', {
+        name: 'OpenAI API Key',
+        hint: 'Enter your API key for OpenAI.',
+        scope: 'world',
+        config: (game.settings.get('macro-util', 'llmProvider') == 'openai'),
+        type: String,
+        default: '',
+        restricted: true,
+        onChange: (value) => {
+            console.log('OpenAI API Key changed:', value ? 'Set' : 'Unset');
         },
     });
 });

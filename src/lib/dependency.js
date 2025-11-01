@@ -1,3 +1,11 @@
+function moduleSetting(feature, defaultValue) {
+    let setting = game.settings.get('macro-util', feature);
+    if (!setting || setting == defaultValue) {
+        ui.notifications.error(`${feature} not set! This needs to be set in the module settings.`);
+        throw(`${feature} not set! This needs to be set in the module settings.`);
+    }
+}
+
 /**
  * Checks if the versions are in ascending order.
  * @param {string} a The first version.
@@ -128,4 +136,5 @@ export const dependencyApi = {
     hasSomeRecommended,
     required,
     someRequired,
+    moduleSetting,
 };

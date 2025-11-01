@@ -5,12 +5,12 @@
  * @returns {Promise<object>} The response from the API.
  * @private
  */
-async function _prompt(prompt, input) {
+async function _prompt(prompt, input, key) {
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${macroUtil.llm.key}`, 
+            Authorization: `Bearer ${key}`, 
         },
         body: JSON.stringify({
             model: "gpt-4",
@@ -32,8 +32,8 @@ async function _prompt(prompt, input) {
  * @param {string} input The user prompt.
  * @returns {Promise<object>} The parsed response from the API.
  */
-async function prompt(prompt, input) {
-    let data = await _prompt(prompt, input);
+async function prompt(prompt, input, key = game.settings.get('macro-util', 'openaiApiKey')) {
+    let data = await _prompt(prompt, input, key);
     if (!data.choices || !data.choices[0]) throw("Invalid response from OpenAI API:", data);
     return JSON.parse(data.choices[0].message.content.trim());
 }

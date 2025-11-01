@@ -13,13 +13,6 @@ import { gemini } from './llm-models/gemini.js';
  */
 async function prompt(prompt, input) {
     const provider = game.settings.get('macro-util', 'llmProvider');
-    const key = game.settings.get('macro-util', 'llmApiKey');
-
-    if (!key) {
-        ui.notifications.error('LLM Key not set! You need to set it in the module settings.');
-        throw('No LLM key installed.');
-    }
-
     switch (provider){
         case 'openai': return openai.prompt(prompt, input);
         case 'gemini': return gemini.prompt(prompt, input);
@@ -30,4 +23,6 @@ async function prompt(prompt, input) {
 export const llmApi = {
     constant : {multiattack},
     prompt,
+    openai,
+    gemini,
 };
