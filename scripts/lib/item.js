@@ -1,3 +1,12 @@
+/**
+ * Creates a synthetic item.
+ * @param {object} actor The actor to create the item for.
+ * @param {object} itemData The data for the item to create.
+ * @param {object} [updates={}] The updates to apply to the item.
+ * @param {object} [mergeOptions] The options for merging the updates.
+ * @param {boolean} [forceRecreate=false] Whether to force recreation of the item.
+ * @returns {Promise<object>} The created item.
+ */
 async function synthetic(actor, itemData, updates = {}, mergeOptions, forceRecreate = false) {
     let item = itemData;
     foundry.utils.mergeObject(updates, { 'flags.world.syntheticItem': true });
@@ -9,8 +18,6 @@ async function synthetic(actor, itemData, updates = {}, mergeOptions, forceRecre
     } else {
         // Scraped from CPR 08/24/2024
         item = new CONFIG.Item.documentClass(itemData, { parent: actor });
-        item.prepareData();
-        item.prepareFinalAttributes();
         if (macroUtil.dependsOn.isActivated('dnd5e', '3.2'))
             item.applyActiveEffects();
     }

@@ -1,3 +1,8 @@
+/**
+ * Gets the light level at a location.
+ * @param {object} [location={ x: 0, y: 0 }] The location to check.
+ * @returns {string} The light level at the location ("bright", "dim", "dark").
+ */
 function lightLevel(location = { x : 0, y : 0 }) {
     if (canvas.scene.globalLight) return 'bright';
     let c = Object.values(location);

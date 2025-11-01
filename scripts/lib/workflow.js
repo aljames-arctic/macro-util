@@ -1,5 +1,12 @@
+/**
+ * Applies damage to a token from an item.
+ * @param {object} itemData The data for the item to apply damage from.
+ * @param {Array<Array<string>>} damageParts The parts of the damage to apply.
+ * @param {object} token The token to apply damage to.
+ * @returns {Promise<void>}
+ */
 async function itemDamageToken(itemData, damageParts, token) {
-    let itemUpdate = foundry.utils.mergeObject(duplicate(itemData), 
+    let itemUpdate = foundry.utils.mergeObject(foundry.utils.duplicate(itemData), 
         {
             type: "feat",
             system: {

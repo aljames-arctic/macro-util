@@ -1,3 +1,10 @@
+/**
+ * Creates a circle template.
+ * @param {object} positionEntity The entity to position the template at.
+ * @param {number} range The range of the template.
+ * @param {string} color The color of the template.
+ * @returns {Promise<object>} The created template.
+ */
 async function circle(positionEntity, range, color) {
     const gridScale = canvas.dimensions.distance; // distance of a tile
 
@@ -20,6 +27,11 @@ async function circle(positionEntity, range, color) {
     return rangeTemplates[0];
 }
 
+/**
+ * Gets the targets within a template.
+ * @param {object} template The template to get targets from.
+ * @returns {Array<object>} The targets within the template.
+ */
 function targets(template) {
     function getTargets(shape){
         const allTokens = canvas.tokens.placeables.filter(obj => obj);

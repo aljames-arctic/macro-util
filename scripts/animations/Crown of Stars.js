@@ -21,13 +21,13 @@ function create(token, moteCount, { effect = undefined, id = 'Crown of Stars', f
         return;
     }
 
-    function rotateSprites(sequence) {
+    function createMote(sequence) {
         sequence = sequence
             .effect()
             .file(file)
             .from(token, { cacheLocation: true });
 
-        if (effect) sequence = sequence.tieToDocuments(effect);
+        if (effect) sequence = sequence.tieTo(effect);
 
         return sequence
             .attachTo(token)
@@ -38,7 +38,7 @@ function create(token, moteCount, { effect = undefined, id = 'Crown of Stars', f
             .persist();
     }
 
-    function loopDaLoop(sequence, objectName, delay) {
+    function addRotation(sequence, objectName, delay) {
         let config = {
                 from: 0,
                 to: 360,
@@ -48,10 +48,10 @@ function create(token, moteCount, { effect = undefined, id = 'Crown of Stars', f
         return sequence.loopProperty(objectName, 'rotation', config);
     }
 
-    function createStarMoteEffect(sequence, idx) {
-        sequence = rotateSprites(sequence);
-        sequence = loopDaLoop(sequence, 'sprite', 500);
-        sequence = loopDaLoop(sequence, 'spriteContainer', 0);
+    function buildMote(sequence, idx) {
+        sequence = createMote(sequence);
+        sequence = addRotation(sequence, 'sprite', 500);
+        sequence = addRotation(sequence, 'spriteContainer', 0);
         return sequence
             .spriteOffset({ x: radius }, { gridUnits: true })
             .rotate((360 / moteCount) * idx)
@@ -60,7 +60,7 @@ function create(token, moteCount, { effect = undefined, id = 'Crown of Stars', f
 
     let starsSequence = new Sequence();
     for (let idx = 1; idx <= moteCount; ++idx)
-        starsSequence = createStarMoteEffect(starsSequence, idx);
+        starsSequence = buildMote(starsSequence, idx);
     starsSequence.play();
 }
 

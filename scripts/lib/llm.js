@@ -1,5 +1,12 @@
 import {multiattack} from '../constants/llm-multiattack.js';
 
+/**
+ * Sends a prompt to the OpenAI API.
+ * @param {string} prompt The system prompt.
+ * @param {string} input The user prompt.
+ * @returns {Promise<object>} The response from the API.
+ * @private
+ */
 async function _prompt(prompt, input) {
     if (!macroUtil.llm.key) {
         ui.notifications.error('LLM Key not set! You need to run macroUtil.llm.key = "sk-proj-abcde12345" (but with an actual key)');
@@ -27,6 +34,12 @@ async function _prompt(prompt, input) {
     return response.json();
 }
 
+/**
+ * Sends a prompt to the OpenAI API and parses the response.
+ * @param {string} prompt The system prompt.
+ * @param {string} input The user prompt.
+ * @returns {Promise<object>} The parsed response from the API.
+ */
 async function prompt(prompt, input) {
     let data = await _prompt(prompt, input);
     if (!data.choices || !data.choices[0]) throw("Invalid response from OpenAI API:", data);

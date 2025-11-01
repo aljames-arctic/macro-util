@@ -1,3 +1,4 @@
+import { actorApi } from './lib/actor.js';
 import { animationApi } from './lib/animations.js';
 import { combatApi } from './lib/combat.js';
 import { dependencyApi } from './lib/dependency.js';
@@ -36,6 +37,7 @@ function setupMacroUtil() {
     version,
   });
 
+  setupApiCalls({ actor: actorApi });
   setupApiCalls({ animation: animationApi });
   setupApiCalls({ combat: combatApi });
   setupApiCalls({ dependsOn: dependencyApi });

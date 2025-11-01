@@ -1,3 +1,14 @@
+/**
+ * Spawns a token.
+ * @param {string} name The name of the token to spawn.
+ * @param {object} [config=null] The configuration for the token.
+ * @param {object} callbacks The callbacks for the spawn.
+ * @param {object} [options={}] The options for the spawn.
+ * @param {string} [options.img] The image for the token.
+ * @param {object} [options.origin] The origin of the spawn.
+ * @param {number} [options.range=60] The range of the spawn.
+ * @returns {Promise<boolean>} Whether the spawn was successful.
+ */
 async function spawn(name, config=null, callbacks, options={img: undefined, origin : undefined, range : 60}) {
     macroUtil.dependsOn.required({id: "portal-lib"});
 
@@ -21,6 +32,14 @@ async function spawn(name, config=null, callbacks, options={img: undefined, orig
     return true;
 }
 
+/**
+ * Teleports a token.
+ * @param {object} token The token to teleport.
+ * @param {object} [options={}] The options for the teleport.
+ * @param {string} [options.img="icons/svg/dice-target.svg"] The image for the teleport.
+ * @param {number} [options.range=60] The range of the teleport.
+ * @returns {Promise<void>}
+ */
 async function teleport(token, options={img : "icons/svg/dice-target.svg", range : 60}) {
     macroUtil.dependsOn.required({id: "portal-lib"});
 

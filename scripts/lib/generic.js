@@ -1,22 +1,34 @@
+/**
+ * Checks if a user has permission to perform an action on an entity.
+ * @param {object} entity The entity to check permissions for.
+ * @param {string} userId The ID of the user to check permissions for.
+ * @returns {boolean} Whether the user has permission.
+ */
 function hasPermission(entity, userId) {
     let user = game.users.get(userId);
     if (!user) return false;
     return entity.testUserPermission(user, 'OWNER');
 }
 
+/**
+ * Removes an entity.
+ * @param {object} entity The entity to remove.
+ * @returns {Promise<void>}
+ */
 async function remove(entity) {
     let isPermitted = hasPermission(entity, game.user.id);
     if (isPermitted) return await entity.delete();
 
-    let [typeIs, config] = [undefined, undefined];
     if (entity instanceof ActiveEffect) {
-        typeIs = 'removeEffects';
-        config = { effects: [entity.id], actorUuid: entity.parent.uuid };
+        await MidiQOL.GM.removeEffects({actorUuid: entity.parent.uuid, effects: [entity.id]});
     }
-
-    if (config && typeIs) await MidiQOL.socket().executeAsGM(typeIs, config);
 }
 
+/**
+ * Waits for a specified number of milliseconds.
+ * @param {number} ms The number of milliseconds to wait.
+ * @returns {Promise<void>}
+ */
 async function wait(ms) { 
     return new Promise(resolve => { setTimeout(resolve, ms); });
 }
