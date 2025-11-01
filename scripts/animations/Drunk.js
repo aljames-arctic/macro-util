@@ -62,6 +62,6 @@ async function destroy(token, { id = 'Drunk' } = {}) {
 }
 
 export const drunk = {
-    create  : create,
-    destroy : destroy,
+    create,
+    destroy,
 };
