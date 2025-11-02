@@ -71,8 +71,8 @@ async function parseOptionMap(optionMap) {
 async function getCompendiumDocuments(compendiumKey, fieldOptions, dataFilter) {
     let pack = game.packs.get(compendiumKey);
     if (!pack) {
-        console.error(`${compendiumKey} does not exist.`)
-        return undefined;
+        ui.notifications.error(`Pack ${compendiumKey} not found.`);
+        throw(`${compendiumKey} does not exist.`)
     }
     let packIndex = await pack.getIndex(fieldOptions);
     let matches = packIndex.filter(dataFilter);
@@ -123,7 +123,8 @@ try {
         let fromCompendium = !!(LLM);
         if (!LLM) LLM = await macroUtil.llm.prompt(macroUtil.llm.constant.multiattack, macroItemDescription);
         if (!LLM) throw('Cannot read LLM! Not saving');
-        await macroItem.setFlag('world', 'llm-multiattack', LLM);
+        const arrayFormat = JSON.parse(LLM);
+        await macroItem.setFlag('world', 'llm-multiattack', arrayFormat);
         if (!fromCompendium) await createCompendiumItem(macroItem);
     }
 

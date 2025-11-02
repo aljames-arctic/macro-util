@@ -35,7 +35,7 @@ async function _prompt(prompt, input, key) {
 async function prompt(prompt, input, key = game.settings.get('macro-util', 'openaiApiKey')) {
     let data = await _prompt(prompt, input, key);
     if (!data.choices || !data.choices[0]) throw("Invalid response from OpenAI API:", data);
-    return JSON.parse(data.choices[0].message.content.trim());
+    return data.choices[0].message.content.trim();
 }
 
 export const openai = {
