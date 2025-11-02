@@ -135,8 +135,9 @@ try {
             throw e;
         }
         await macroItem.setFlag('world', 'llm-multiattack', arrayFormat);
+        multiattackData = arrayFormat;
         if (!fromCompendium) await createCompendiumItem(macroItem);
     }
 
-    for (let optionMap of arrayFormat) await parseOptionMap(optionMap);
+    for (let optionMap of multiattackData) await parseOptionMap(optionMap);
 } catch (e) { console.error(e); }
