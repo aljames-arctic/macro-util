@@ -56,7 +56,7 @@ async function _prompt(prompt, input, key) {
  * @param {string} [input] The user prompt.
  * @returns {Promise<object>} The parsed response from the API.
  */
-async function prompt(prompt, input, key = game.settings.get('macro-util', 'geminiApiKey')) {
+async function prompt(prompt, input, apiKey) {
     let systemPrompt = prompt;
     let userInput = input;
     if (input === undefined) {
@@ -64,7 +64,12 @@ async function prompt(prompt, input, key = game.settings.get('macro-util', 'gemi
         userInput = prompt;
     }
 
-    let data = await _prompt(systemPrompt, userInput, key);
+    if (!apiKey) {
+        const global = game.settings.get('macro-util', 'useGlobalApiKey');
+        apiKey = game.settings.get('macro-util', `geminiApiKey${(global) ? "Global" : ""}`);
+    }
+
+    let data = await _prompt(systemPrompt, userInput, apiKey);
     if (!data.candidates || !data.candidates[0]?.content?.parts || !data.candidates[0].content.parts[0]) {
         console.error("Invalid or incomplete response from Gemini API:", data);
         throw new Error("Invalid or incomplete response from Gemini API");
@@ -72,14 +77,22 @@ async function prompt(prompt, input, key = game.settings.get('macro-util', 'gemi
     return data.candidates[0].content.parts[0].text.trim();
 }
 
-async function listModels(key = game.settings.get('macro-util', 'geminiApiKey')) {
+async function listModels() {
     macroUtil.dependsOn.moduleSetting(`llmApiKey`, "");
+
+    const useGlobalApiKey = game.settings.get('macro-util', 'useGlobalApiKey');
+    let apiKey;
+    if (useGlobalApiKey) {
+        apiKey = game.settings.get('macro-util', 'globalGeminiApiKey');
+    } else {
+        apiKey = game.settings.get('macro-util', 'geminiApiKey');
+    }
 
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            "x-goog-api-key": key,
+            "x-goog-api-key": apiKey,
         },
     });
 

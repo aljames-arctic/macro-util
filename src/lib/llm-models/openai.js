@@ -32,8 +32,13 @@ async function _prompt(prompt, input, key) {
  * @param {string} input The user prompt.
  * @returns {Promise<object>} The parsed response from the API.
  */
-async function prompt(prompt, input, key = game.settings.get('macro-util', 'openaiApiKey')) {
-    let data = await _prompt(prompt, input, key);
+async function prompt(prompt, input, apiKey) {
+    if (!apiKey) {
+        const global = game.settings.get('macro-util', 'useGlobalApiKey');
+        apiKey = game.settings.get('macro-util', `openaiApiKey${(global) ? "Global" : ""}`);
+    }
+
+    let data = await _prompt(prompt, input, apiKey);
     if (!data.choices || !data.choices[0]) throw("Invalid response from OpenAI API:", data);
     return data.choices[0].message.content.trim();
 }
