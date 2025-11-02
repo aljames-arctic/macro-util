@@ -35,7 +35,7 @@ async function parseOptionMap(optionMap) {
         return hasItem || isCornerCase;
     }
               
-    let attacks = new Set(optionMap.flatMap(i => i).filter(i => actorHasItem(i)));
+    let attacks = new Set(optionMap.reduce((acc, val) => acc.concat(val), []).filter(i => actorHasItem(i)));
     let options = attacks.map(a => {return {value : a, label : a}}); // attacks CPR options format
     while (options.size) {
         let initialOption = await queryOptions(options);
