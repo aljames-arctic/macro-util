@@ -4,10 +4,10 @@
  * @returns {string} The light level at the location ("bright", "dim", "dark").
  */
 function lightLevel(location = { x : 0, y : 0 }) {
-    if (canvas.scene.globalLight) return 'bright';
+    if (canvas.scene.environment.globalLight.enabled) return 'bright';
     let c = Object.values(location);
 
-    let lights = canvas.effects.lightSources.filter(src => !(src instanceof GlobalLightSource) && src.shape.contains(...c));
+    let lights = canvas.effects.lightSources.filter(src => !(src instanceof foundry.canvas.sources.GlobalLightSource) && src.shape.contains(...c));
     if (!lights.length) return 'dark';
     let inBright = lights.some(light => {
         let {'data': {x, y}, ratio} = light;
