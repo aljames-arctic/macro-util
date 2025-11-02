@@ -1,4 +1,4 @@
-import {multiattack} from '../constants/llm-multiattack.js';
+import {multiattack} from './llm-models/prompts/llm-multiattack.js';
 
 import { openai } from './llm-models/openai.js';
 import { gemini } from './llm-models/gemini.js';
