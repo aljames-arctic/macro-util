@@ -7,12 +7,15 @@ import { genericApi } from './lib/generic.js';
 import { itemApi } from './lib/item.js';
 import { llmApi } from './lib/llm.js';
 import { moduleApi } from './lib/modules.js'
+import { sceneApi } from './lib/scene.js';
 import { templateApi } from './lib/template.js';
+import { tokenApi } from './lib/token.js';
+import { workflowApi } from './lib/workflow.js';
+
 // Import module settings
 import './settings.js';
 
-import { tokenApi } from './lib/token.js';
-import { workflowApi } from './lib/workflow.js';
+
 
 /**
  * Removes a previously exported function or variable and exports the specifed function or variable if the macro is active.
@@ -49,6 +52,7 @@ function setupMacroUtil() {
   setupApiCalls({ item: itemApi });
   setupApiCalls({ llm: llmApi });
   setupApiCalls({ module: moduleApi });
+  setupApiCalls({ scene: sceneApi });
   setupApiCalls({ template: templateApi });
   setupApiCalls({ token: tokenApi });
   setupApiCalls({ workflow: workflowApi });
