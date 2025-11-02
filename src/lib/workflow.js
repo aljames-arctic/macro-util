@@ -48,7 +48,7 @@ const WORKFLOW_STAGE = {
 };
 
 async function isSlain(workflow) {
-    if (WORKFLOW_STAGE[workflow.macroPass] < WORKFLOW_STAGE.preDamageApplication) {
+    if (WORKFLOW_STAGE[workflow.macroPass] <= WORKFLOW_STAGE.preDamageApplication) {
         throw new Error(`isSlain is being checked in the ${workflow.macroPass} stage which is too soon`);
     }
     const damageItem = workflow.damageItem;
