@@ -13,29 +13,32 @@ async function queryOptions(options) {
     return selection;
 }
 
-async function parseOptionMap(optionMap) {
-    function arrayWithoutItem(arr, item) {
-      let index = arr.indexOf(item);
-      return arr.slice(0, index).concat(arr.slice(index+1));
-    }
-    function getItem(selection) {
-        let item = actor.items.find(i => i.name.toLowerCase() == selection);
-        // Check with an added 's' ie Claw -> Claws (per Moto Moto)
-        item = item ?? actor.items.find(i => i.name.toLowerCase() == selection + 's');
-        // Check without " Attack" ie "Morningstar Attack" -> "Morningstar" (per Christopher)
-        item = item ?? actor.items.find(i => i.name.toLowerCase() == selection.replace(" attack", "").trim());
-        return item;
-    }
-    function actorHasItem(it) {
-        let itemName = it.toLowerCase();
-        let hasItem = getItem(itemName);
-        let isCornerCase = ['melee attack', 'ranged attack'].includes(itemName);
-        if (!hasItem && !isCornerCase)
-            ui.notifications.warn(`Multiattack: Cannot find item ${it} on ${actor.name}.\nPlease update macroItem.flags.world['llm-parsed'], rename the attack, or add additional smarts to this script!`);
+function arrayWithoutItem(arr, item) {
+    let index = arr.indexOf(item);
+    return arr.slice(0, index).concat(arr.slice(index+1));
+}
 
-        return hasItem || isCornerCase;
+function getItem(selection) {
+    let item = actor.items.find(i => i.name.toLowerCase() == selection);
+    // Check with an added 's' ie Claw -> Claws (per Moto Moto)
+    item = item ?? actor.items.find(i => i.name.toLowerCase() == selection + 's');
+    // Check without " Attack" ie "Morningstar Attack" -> "Morningstar" (per Christopher)
+    item = item ?? actor.items.find(i => i.name.toLowerCase() == selection.replace(" attack", "").trim());
+    return item;
+}
+
+function actorHasItem(it) {
+    let itemName = it.toLowerCase();
+    let hasItem = getItem(itemName);
+    let isCornerCase = ['melee attack', 'ranged attack'].includes(itemName);
+    if (!hasItem && !isCornerCase) {
+        ui.notifications.warn(`Multiattack: Cannot find item ${it} on ${actor.name}.\nPlease update macroItem.flags.world['llm-parsed'], rename the attack, or add additional smarts to this script!`);
     }
-              
+
+    return hasItem || isCornerCase;
+}
+
+async function parseOptionMap(optionMap) {
     let attacks = new Set(optionMap.reduce((acc, val) => acc.concat(val), []).filter(i => actorHasItem(i)));
     let options = attacks.map(a => {return {value : a, label : a}}); // attacks CPR options format
     while (options.size) {
@@ -83,13 +86,13 @@ async function getCompendiumDocuments(compendiumKey, fieldOptions, dataFilter) {
 async function getCompendiumItem(itemData) {
     let fieldOptions = {'fields': ['name', 'type', 'system.description']};
     let itemFilter = i => (
-                (i.name == itemData.name) && 
-                (i.system.description.value.includes(itemData.system.description.value)) &&
-                (i.type == itemData.type)
-            );
+        (i.name == itemData.name) && 
+        (i.system.description.value.includes(itemData.system.description.value)) &&
+        (i.type == itemData.type)
+    );
 
     let documents = await getCompendiumDocuments(itemCompendium, fieldOptions, itemFilter);
-    return (documents.length) ? documents[0] : undefined;
+    return documents.length ? documents[0] : undefined;
 }
 
 async function getCompendiumItemFlags(itemData) {
@@ -114,18 +117,18 @@ async function createCompendiumItem(item) {
 
 const macroItemDescription = macroItem.system.description.value.replace(/(<([^>]+)>)/gi, "");
 try {
-    let LLM = macroItem.getFlag('world', 'llm-multiattack');
-    if (!LLM) {
+    let multiattackData = macroItem.getFlag('world', 'llm-multiattack');
+    if (!multiattackData) {
         // Fallback #1 - Fetch from compendium
-        LLM = await getCompendiumItemFlags(macroItem);
+        multiattackData = await getCompendiumItemFlags(macroItem);
         // Fallback #2 - Call LLM
-        let fromCompendium = !!(LLM);
-        if (!LLM) LLM = await macroUtil.llm.prompt(macroUtil.llm.constant.multiattack, macroItemDescription);
-        if (!LLM) throw('Cannot read LLM! Not saving');
-        const arrayFormat = JSON.parse(LLM);
+        let fromCompendium = !!(multiattackData);
+        if (!multiattackData) multiattackData = await macroUtil.llm.prompt(macroUtil.llm.constant.multiattack, macroItemDescription);
+        if (!multiattackData) throw('Cannot read multiattackData! Not saving');
+        const arrayFormat = JSON.parse(multiattackData);
         await macroItem.setFlag('world', 'llm-multiattack', arrayFormat);
         if (!fromCompendium) await createCompendiumItem(macroItem);
     }
 
-    for (let optionMap of LLM) await parseOptionMap(optionMap);
+    for (let optionMap of multiattackData) await parseOptionMap(optionMap);
 } catch (e) { console.error(e); }
