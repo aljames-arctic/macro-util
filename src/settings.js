@@ -2,7 +2,7 @@
 Hooks.once('init', function() {
     game.settings.register('macro-util', 'useGlobalApiKey', {
         name: 'Enable global API key usage',
-        hint: 'If enabled, all users will use the same API key set by the GM. Otherwise, users can set their own distinct keys.',
+        hint: 'If enabled, all users will use the same API key set by the GM.\nNote: All GMs will be able to see this key\nNote: If you make it a global key, snoopy users will be able to access it (locally their code needs to know what it is).\n\n!!! After setting this and the LLM Provider, SAVE AND REOPEN to continue (the API field will change) !!!',
         scope: 'world',
         config: true,
         type: Boolean,
@@ -12,7 +12,7 @@ Hooks.once('init', function() {
 
     game.settings.register('macro-util', 'llmProvider', {
         name: 'LLM Provider',
-        hint: 'Choose the Large Language Model (LLM) provider to use for AI-powered features.',
+        hint: 'Choose the Large Language Model (LLM) provider to use for AI-powered features.\n\n!!! After setting this and the Global preference, SAVE AND REOPEN to continue (the API field will change) !!!',
         scope: 'world',
         config: true,
         type: String,
@@ -29,9 +29,9 @@ Hooks.once('init', function() {
     // Global API Key settings (only visible if useGlobalApiKey is true)
     game.settings.register('macro-util', 'geminiApiKeyGlobal', {
         name: 'Global Gemini API Key',
-        hint: 'Enter the global API key for Gemini. (https://aistudio.google.com/api-keys)',
+        hint: 'Enter the server side API key for Gemini. (https://aistudio.google.com/api-keys)',
         scope: 'world',
-        config: (game.settings.get('macro-util', 'useGlobalApiKey') && game.settings.get('macro-util', 'llmProvider') == 'gemini'),
+        config: true,
         type: String,
         default: '',
         restricted: true,
@@ -42,9 +42,9 @@ Hooks.once('init', function() {
 
     game.settings.register('macro-util', 'openaiApiKeyGlobal', {
         name: 'Global OpenAI API Key',
-        hint: 'Enter the global API key for OpenAI.',
+        hint: 'Enter the server side API key for OpenAI.',
         scope: 'world',
-        config: (game.settings.get('macro-util', 'useGlobalApiKey') && game.settings.get('macro-util', 'llmProvider') == 'openai'),
+        config: true,
         type: String,
         default: '',
         restricted: true,
@@ -55,9 +55,9 @@ Hooks.once('init', function() {
 
     game.settings.register('macro-util', 'geminiApiKey', {
         name: 'Gemini API Key',
-        hint: 'Enter your personal API key for Gemini. (https://aistudio.google.com/api-keys)',
+        hint: 'Enter your client side API key for Gemini. (https://aistudio.google.com/api-keys)',
         scope: 'client',
-        config: (!game.settings.get('macro-util', 'useGlobalApiKey') && game.settings.get('macro-util', 'llmProvider') == 'gemini'),
+        config: true,
         type: String,
         default: '',
         onChange: (value) => {
@@ -67,9 +67,9 @@ Hooks.once('init', function() {
 
     game.settings.register('macro-util', 'openaiApiKey', {
         name: 'OpenAI API Key',
-        hint: 'Enter your personal API key for OpenAI.',
+        hint: 'Enter your client side API key for OpenAI.',
         scope: 'client',
-        config: (!game.settings.get('macro-util', 'useGlobalApiKey') && game.settings.get('macro-util', 'llmProvider') == 'openai'),
+        config: true,
         type: String,
         default: '',
         onChange: (value) => {
