@@ -4,6 +4,7 @@ const autoUpload = true;    /* Note: storing in compendium works but throws know
 const itemCompendium = 'world.llm-modifications';    // Entry from: game.packs.filter(p => p.metadata.type == "Item").map(p => p.metadata.id)
 
 async function queryOptions(options) {
+    macroUtil.dependsOn.required({id: 'chris-premades'});
     let selection = options.first().value;
     if (options.size > 1) {
         let input = { label: 'DND5E.Attack', name: 'skillSelected', options: { options: Array.from(options) } };
