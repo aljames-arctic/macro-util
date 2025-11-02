@@ -65,9 +65,9 @@ async function prompt(prompt, input, key = game.settings.get('macro-util', 'gemi
     }
 
     let data = await _prompt(systemPrompt, userInput, key);
-    if (!data.candidates || !data.candidates[0]) {
-        console.error("Invalid response from Gemini API:", data);
-        throw new Error("Invalid response from Gemini API");
+    if (!data.candidates || !data.candidates[0]?.content?.parts || !data.candidates[0].content.parts[0]) {
+        console.error("Invalid or incomplete response from Gemini API:", data);
+        throw new Error("Invalid or incomplete response from Gemini API");
     }
     return data.candidates[0].content.parts[0].text.trim();
 }
