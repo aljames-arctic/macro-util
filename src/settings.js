@@ -25,7 +25,7 @@ Hooks.once('init', function() {
 
     game.settings.register('macro-util', 'geminiApiKey', {
         name: 'Gemini API Key',
-        hint: 'Enter your API key for Gemini.',
+        hint: 'Enter your API key for Gemini. (https://aistudio.google.com/api-keys)',
         scope: 'world',
         config: (game.settings.get('macro-util', 'llmProvider') == 'gemini'),
         type: String,
