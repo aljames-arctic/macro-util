@@ -39,7 +39,7 @@ function actorHasItem(it) {
 }
 
 async function parseOptionMap(optionMap) {
-    let attacks = new Set(optionMap.reduce((acc, val) => acc.concat(val), []).filter(i => actorHasItem(i)));
+    let attacks = new Set(optionMap.flatMap(i => i).filter(i => actorHasItem(i)));
     let options = attacks.map(a => {return {value : a, label : a}}); // attacks CPR options format
     while (options.size) {
         let initialOption = await queryOptions(options);
@@ -124,11 +124,19 @@ try {
         // Fallback #2 - Call LLM
         let fromCompendium = !!(multiattackData);
         if (!multiattackData) multiattackData = await macroUtil.llm.prompt(macroUtil.llm.constant.multiattack, macroItemDescription);
+        console.warn("LLM returned: ", multiattackData);
         if (!multiattackData) throw('Cannot read multiattackData! Not saving');
-        const arrayFormat = JSON.parse(multiattackData);
+        let arrayFormat;
+        try {
+            arrayFormat = JSON.parse(multiattackData);
+        } catch (e) {
+            console.error(e);
+            console.error("LLM returned: ", multiattackData);
+            throw e;
+        }
         await macroItem.setFlag('world', 'llm-multiattack', arrayFormat);
         if (!fromCompendium) await createCompendiumItem(macroItem);
     }
 
-    for (let optionMap of multiattackData) await parseOptionMap(optionMap);
+    for (let optionMap of arrayFormat) await parseOptionMap(optionMap);
 } catch (e) { console.error(e); }

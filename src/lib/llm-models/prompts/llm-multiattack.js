@@ -23,6 +23,8 @@ Prompt Instructions
 
     Unique Sequences: Generate unique attack sequences per section and then combine them sequentially in the described order.
 
+    Specification Marking: Sometimes an ability might have extra text near the attack name describing how it should be performed, often this will appear in parenthesis, such as "(level 2 version)", this portion of text should be ignored when finding the corresponding item.
+
     Output Formatting: Reflect the separation of sections in the nested structure of the JSON. Each array corresponds to a "then"-separated section, and within each section, all unique sequences are represented.
 
 Output Format
