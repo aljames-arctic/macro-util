@@ -43,19 +43,19 @@ function setupMacroUtil() {
     version,
   });
 
-  setupApiCalls({ actor: actorApi });
-  setupApiCalls({ animation: animationApi });
-  setupApiCalls({ combat: combatApi });
-  setupApiCalls({ dependsOn: dependencyApi });
+  setupApiCalls({ actor: actorApi });               // Updated to v13
+  setupApiCalls({ animation: animationApi });       // Updated to v13
+  setupApiCalls({ combat: combatApi });             // Updated to v13
+  setupApiCalls({ dependsOn: dependencyApi });      // Updated to v13
   setupApiCalls({ effect: effectsApi });
   setupApiCalls({ generic: genericApi });
   setupApiCalls({ item: itemApi });
-  setupApiCalls({ llm: llmApi });
-  setupApiCalls({ module: moduleApi });
-  setupApiCalls({ scene: sceneApi });
-  setupApiCalls({ template: templateApi });
+  setupApiCalls({ llm: llmApi });                   // Updated to v13
+  setupApiCalls({ module: moduleApi });             // Updated to v13
+  setupApiCalls({ scene: sceneApi });               // Updated to v13
+  setupApiCalls({ template: templateApi });         // Updated to v13
   setupApiCalls({ token: tokenApi });
-  setupApiCalls({ workflow: workflowApi });
+  setupApiCalls({ workflow: workflowApi });         // Updated to v13
 }
 
 Hooks.once('ready', async function() {

@@ -1,3 +1,8 @@
+/* System Level Test
+    let circle = await macroUtil.template.circle(_token, 35, '#555555');
+    macroUtil.template.targets(circle);
+*/
+
 /**
  * Creates a circle template.
  * @param {object} positionEntity The entity to position the template at.
