@@ -3,8 +3,6 @@ import {multiattack} from '../constants/llm-multiattack.js';
 import { openai } from './llm-models/openai.js';
 import { gemini } from './llm-models/gemini.js';
 
-
-
 /**
  * Sends a prompt to the OpenAI API and parses the response.
  * @param {string} prompt The system prompt.

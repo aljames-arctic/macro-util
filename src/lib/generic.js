@@ -4,10 +4,10 @@
  * @param {string} userId The ID of the user to check permissions for.
  * @returns {boolean} Whether the user has permission.
  */
-function hasPermission(entity, userId) {
+function hasPermission(actor, userId) {
     let user = game.users.get(userId);
     if (!user) return false;
-    return entity.testUserPermission(user, 'OWNER');
+    return actor.testUserPermission(user, 'OWNER');
 }
 
 /**
