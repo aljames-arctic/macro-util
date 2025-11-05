@@ -11,7 +11,7 @@ function lightLevel(location = { x : 0, y : 0 }) {
     if (!lights.length) return 'dark';
     let inBright = lights.some(light => {
         let {'data': {x, y}, ratio} = light;
-        let bright = ClockwiseSweepPolygon.create({'x': x, 'y': y}, {
+        let bright = foundry.canvas.geometry.ClockwiseSweepPolygon.create({'x': x, 'y': y}, {
             'type': 'light',
             'boundaryShapes': [new PIXI.Circle(x, y, ratio * light.shape.config.radius)]
         });
