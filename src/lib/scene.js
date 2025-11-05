@@ -5,7 +5,7 @@
  */
 function lightLevel(location = { x : 0, y : 0 }) {
     if (canvas.scene.environment.globalLight.enabled) return 'bright';
-    let c = Object.values(location);
+    let c = [location.x, location.y];
 
     let lights = canvas.effects.lightSources.filter(src => !(src instanceof foundry.canvas.sources.GlobalLightSource) && src.shape.contains(...c));
     if (!lights.length) return 'dark';
