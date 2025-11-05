@@ -78,12 +78,10 @@ async function prompt(prompt, input, apiKey) {
 }
 
 async function listModels() {
-    macroUtil.dependsOn.moduleSetting(`llmApiKey`, "");
-
     const useGlobalApiKey = game.settings.get('macro-util', 'useGlobalApiKey');
     let apiKey;
     if (useGlobalApiKey) {
-        apiKey = game.settings.get('macro-util', 'globalGeminiApiKey');
+        apiKey = game.settings.get('macro-util', 'geminiApiKeyGlobal');
     } else {
         apiKey = game.settings.get('macro-util', 'geminiApiKey');
     }
