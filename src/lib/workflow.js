@@ -47,12 +47,27 @@ const WORKFLOW_STAGE = {
     preCompleted: 45
 };
 
-async function isSlain(workflow) {
-    if (WORKFLOW_STAGE[workflow.macroPass] <= WORKFLOW_STAGE.preDamageApplication) {
-        throw new Error(`isSlain is being checked in the ${workflow.macroPass} stage which is too soon`);
-    }
+function requiredAfter(tag, stage, workflow) {
+    if (!(WORKFLOW_STAGE[workflow.macroPass] >= WORKFLOW_STAGE[stage]))
+        throw new Error(`${tag} requires executing after the ${stage} stage but executed in the ${workflow.macroPass} stage`);
+}
+
+function isSlain(workflow) {
+    requiredAfter('isSlain', 'preDamageApplication', workflow);
     const damageItem = workflow.damageItem;
     return (damageItem.newHP == 0) && (damageItem.oldHP !== 0);
 }
 
-export const workflowApi = { WORKFLOW_STAGE, isSlain };
+function setSpellLevel(workflow, rolledActivity, level) {
+    requiredAfter('setSpellLevel', 'prePreambleComplete', workflow);
+    if (!rolledActivity.isSpell == "spell") return;
+    const castData = workflow.castData;
+    const itemData = workflow.item;
+
+    castData.castLevel = level;
+    itemData.level = workflow.castData.castLevel;
+    castData.scaling = castData.castLevel - castData.baseLevel;    
+    itemData.flags.dnd5e.scaling = castData.scaling;
+}
+
+export const workflowApi = { isSlain, setSpellLevel, requiredAfter };
