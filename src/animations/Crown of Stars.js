@@ -21,7 +21,6 @@ function create(token, moteCount, { effect = undefined, id = 'Crown of Stars', f
         const moteEffect = new Sequence()
             .effect()
             .file(file)
-            .copySprite(token, { cacheLocation: true })
             .attachTo(token)
             .scale(scale)
             .fadeIn(300)
