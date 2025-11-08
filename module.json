@@ -1,7 +1,7 @@
 {
   "id": "macro-util",
   "title": "Macro Utility!? Bakana!",
-  "version": "2.0.1",
+  "version": "#{VERSION}#",
   "compatibility": {
     "minimum": "13",
     "verified": "13",
