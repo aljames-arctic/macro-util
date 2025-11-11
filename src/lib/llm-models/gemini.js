@@ -38,7 +38,8 @@ async function _prompt(prompt, input, key) {
         };
     }
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-latest:generateContent`, {
+    const model = "gemini-2.5-flash-lite";
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
