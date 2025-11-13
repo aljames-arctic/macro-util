@@ -1,11 +1,13 @@
 //Last Updated: 4/14/2023
 //Author: EskieMoh#2969
 
-async function create(token, { id = 'Angry', duration = 5000 } = {}) {
+async function create(token, { id = 'Angry', duration = 5000, file = undefined } = {}) {
     if (!macroUtil.dependsOn.required({ id: 'sequencer' })) return;
-    if (!macroUtil.dependsOn.someRequired([{ id: 'eskie-effects' }, { id: 'eskie-effects-free' }])) return;
-    const isPatreonUser = macroUtil.dependsOn.isActivated({ id: 'eskie-effects' });
-    let file = (isPatreonUser) ? `eskie.emote.angry.02` : `eskie-free.emote.angry.01`;
+    if (!file) {
+        if (!macroUtil.dependsOn.someRequired([{ id: 'eskie-effects' }, { id: 'eskie-effects-free' }])) return;
+        const isPatreonUser = macroUtil.dependsOn.isActivated({ id: 'eskie-effects' });
+        file = (isPatreonUser) ? `eskie.emote.angry.02` : `eskie-free.emote.angry.01`;
+    }
 
     let effect = new Sequence()
         .effect()
@@ -37,7 +39,7 @@ async function create(token, { id = 'Angry', duration = 5000 } = {}) {
         .waitUntilFinished();
 }
 
-async function destroy(token, { id = 'Angry' } = {}) {
+async function stop(token, { id = 'Angry' } = {}) {
     return Sequencer.EffectManager.endEffects({ name: id, object: token });
 }
 
@@ -48,6 +50,6 @@ async function play(token, options = {}) {
 
 export const angry = {
     create,
-    destroy,
+    stop,
     play,
 };

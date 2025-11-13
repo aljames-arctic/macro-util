@@ -35,12 +35,12 @@ async function play(options = {}) {
     await seq.play();
 }
 
-async function destroy({ id = 'Wall of Fire' } = {}) {
+async function stop({ id = 'Wall of Fire' } = {}) {
     return Sequencer.EffectManager.endEffects({ name: id });
 }
 
 export const wallOfFire = {
     create,
-    destroy,
+    stop,
     play,
 };

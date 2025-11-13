@@ -60,13 +60,13 @@ async function play(token, options = {}) {
     await seq.play();
 }
 
-async function destroy(token, { id = 'Drunk' } = {}) {
+async function stop(token, { id = 'Drunk' } = {}) {
     return Sequencer.EffectManager.endEffects({ name: `${id} ${token.id}`, object: token });
 }
 
 export const drunk = {
     create,
-    destroy,
+    stop,
     play,
 };
 

@@ -68,13 +68,13 @@ async function remove(token, idx, { id = 'Crown of Stars' } = {}) {
     if (effects.length > 0) { return Sequencer.EffectManager.endEffects({ name: effect.name, objects: token }); }
 }
 
-async function destroy(token, { id = 'Crown of Stars' } = {}) {
+async function stop(token, { id = 'Crown of Stars' } = {}) {
     return Sequencer.EffectManager.endEffects({ name: `${id} - *`, objects: token });
 }
 
 export const crownOfStars = {
     create,
     remove,
-    destroy,
+    stop,
     play,
 };

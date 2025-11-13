@@ -21,12 +21,12 @@ async function play(token, options = {}) {
     await seq.play();
 }
 
-async function destroy(token, { id = 'Sleep' } = {}) {
+async function stop(token, { id = 'Sleep' } = {}) {
     return Sequencer.EffectManager.endEffects({ name: `${id} ${token.id}`, object: token });
 }
 
 export const sleep = {
     create,
-    destroy,
+    stop,
     play,
 };
