@@ -115,14 +115,14 @@ function required(dependency) {
 /**
  * Checks if at least one of a list of required dependencies is activated and throws an error if not.
  * @param {Array<object>} dependencyList The list of dependencies to check.
- * @returns {boolean} Whether at least one dependency is activated.
+ * @returns {null | throw} 
  */
 function someRequired(dependencyList) {
     let errorMsg = `Requires at least one of the following to be installed and activated:\n`;
 
     for (let dependency of dependencyList) {
         let [isActivated, currentVersion] = _activated(dependency);
-        if (isActivated) return true;
+        if (isActivated) return;
         if (errorMsg.length) errorMsg += '\n';
         errorMsg += `Module Id: ${dependency.id}`;
         errorMsg += _versionMessageAppend(dependency, currentVersion);
