@@ -64,7 +64,7 @@ function isActivated(dependency, warnMessage) {
     if (!dependency.id) return [false, undefined];
     let [isActivated, currentVersion] = _activated(dependency);
     if (!isActivated && warnMessage) {
-    if (warnMessage.length) warnMessage += '\n';
+        if (warnMessage.length) warnMessage += '\n';
         warnMessage += `Warning: ${dependency.id} is not between expected versions:`;
         warnMessage += _versionMessageAppend(dependency, currentVersion);
         console.warn(warnMessage);
@@ -123,7 +123,7 @@ function someRequired(dependencyList) {
     for (let dependency of dependencyList) {
         let [isActivated, currentVersion] = _activated(dependency);
         if (isActivated) return true;
-
+        if (errorMsg.length) errorMsg += '\n';
         errorMsg += `Module Id: ${dependency.id}`;
         errorMsg += _versionMessageAppend(dependency, currentVersion);
     }
