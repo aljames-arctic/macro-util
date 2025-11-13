@@ -6,14 +6,19 @@ function create(source, destination, {color = "blue"} = {}) {
     const animation = macroUtil.animation.util.getColorPath("jb2a.energy_strands.range.multiple", color, "blue") + ".01";
 
     // Create and return the entire sequence so it can be played.
-    const sequence = new Sequence()
+    return new Sequence()
         .effect()
             .attachTo(source)
             .stretchTo(destination)
-            .file(animation)
-        .play();
+            .file(animation);
+}
+
+async function play(source, destination, options = {}) {
+    let seq = await create(source, destination, options);
+    await seq.play();
 }
 
 export const energyStrands = {
-    create
+    create,
+    play,
 };

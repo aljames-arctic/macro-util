@@ -31,7 +31,7 @@ function create(token, { id = 'Drunk' } = {}) {
             .private();
     });
 
-    sequence
+    return sequence
         .animation()
         .on(token)
         .opacity(0)
@@ -52,9 +52,12 @@ function create(token, { id = 'Drunk' } = {}) {
 
         .animation()
         .on(token)
-        .opacity(1)
+        .opacity(1);
+}
 
-        .play();
+async function play(token, options = {}) {
+    let seq = await create(token, options);
+    await seq.play();
 }
 
 async function destroy(token, { id = 'Drunk' } = {}) {
@@ -64,4 +67,6 @@ async function destroy(token, { id = 'Drunk' } = {}) {
 export const drunk = {
     create,
     destroy,
+    play,
 };
+

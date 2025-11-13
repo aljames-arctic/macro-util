@@ -14,8 +14,11 @@ function create(token, { id = 'Sleep' } = {}) {
         .attachTo(token, {bindRotation: false, bindAlpha: false})
         .persist()
         .scaleToObject(2)
+}
 
-        .play();
+async function play(token, options = {}) {
+    let seq = await create(token, options);
+    await seq.play();
 }
 
 async function destroy(token, { id = 'Sleep' } = {}) {
@@ -25,4 +28,5 @@ async function destroy(token, { id = 'Sleep' } = {}) {
 export const sleep = {
     create,
     destroy,
+    play,
 };

@@ -48,7 +48,13 @@ function create(token, moteCount, { effect = undefined, id = 'Crown of Stars', f
     for (let i = 1; i <= moteCount; i++) {
         starsSequence.addSequence(createMote(i));
     }
-    starsSequence.play();
+    
+    return starsSequence;
+}
+
+async function play(token, moteCount, options = {}) {
+    let seq = await create(token, moteCount, options);
+    await seq.play()
 }
 
 async function remove(token, idx, { id = 'Crown of Stars' } = {}) {
@@ -70,4 +76,5 @@ export const crownOfStars = {
     create,
     remove,
     destroy,
+    play,
 };

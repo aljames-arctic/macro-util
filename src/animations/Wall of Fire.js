@@ -15,9 +15,8 @@ async function create({ id = 'Wall of Fire' } = {}) {
     const wallRay = await Portal.getRay();
 
     if (wallRay.cancelled) {
-    // Portal.getRay() returns null on cancellation
-    if (!wallRay) {
-        return;
+        // Portal.getRay() returns null on cancellation
+        if (!wallRay) { return; }
     }
 
     // Create and play the animation, returning the sequence
@@ -29,8 +28,11 @@ async function create({ id = 'Wall of Fire' } = {}) {
             .persist()
             .scale(1.5)
             .stretchTo({ x: wallRay.x + wallRay.dx, y: wallRay.y + wallRay.dy })
-        .play();
-    }
+}
+
+async function play(options = {}) {
+    let seq = await create(options);
+    await seq.play();
 }
 
 async function destroy({ id = 'Wall of Fire' } = {}) {
@@ -40,4 +42,5 @@ async function destroy({ id = 'Wall of Fire' } = {}) {
 export const wallOfFire = {
     create,
     destroy,
+    play,
 };
