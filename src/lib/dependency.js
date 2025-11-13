@@ -1,11 +1,3 @@
-function moduleSetting(feature, defaultValue) {
-    let setting = game.settings.get('macro-util', feature);
-    if (!setting || setting == defaultValue) {
-        ui.notifications.error(`${feature} not set! This needs to be set in the module settings.`);
-        throw(`${feature} not set! This needs to be set in the module settings.`);
-    }
-}
-
 /**
  * Checks if the versions are in ascending order.
  * @param {string} a The first version.
@@ -101,11 +93,11 @@ function hasSomeRecommended(dependencyList) {
 /**
  * Checks if a required dependency is activated and throws an error if it is not.
  * @param {object} dependency The dependency to check.
- * @returns {boolean} Whether the dependency is activated.
+ * @returns {null | throw} 
  */
 function required(dependency) {
     let [isActivated, currentVersion] = _activated(dependency);
-    if (isActivated) return true;
+    if (isActivated) return;
 
     let errorMsg = `Requires ${dependency.id} to be installed and activated.`;
     errorMsg += _versionMessageAppend(dependency, currentVersion);
@@ -136,5 +128,4 @@ export const dependencyApi = {
     hasSomeRecommended,
     required,
     someRequired,
-    moduleSetting,
 };
