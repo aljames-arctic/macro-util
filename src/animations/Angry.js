@@ -2,9 +2,9 @@
 //Author: EskieMoh#2969
 
 async function create(token, { id = 'Angry', duration = 5000, file = undefined } = {}) {
-    if (!macroUtil.dependsOn.required({ id: 'sequencer' })) return;
+    macroUtil.dependsOn.required({ id: 'sequencer' });
     if (!file) {
-        if (!macroUtil.dependsOn.someRequired([{ id: 'eskie-effects' }, { id: 'eskie-effects-free' }])) return;
+        macroUtil.dependsOn.someRequired([{ id: 'eskie-effects' }, { id: 'eskie-effects-free' }]);
         const isPatreonUser = macroUtil.dependsOn.isActivated({ id: 'eskie-effects' });
         file = (isPatreonUser) ? `eskie.emote.angry.02` : `eskie-free.emote.angry.01`;
     }

@@ -10,11 +10,8 @@
  * @param scale Scale factor for the animation
  */
 function create(token, moteCount, { effect = undefined, id = 'Crown of Stars', file = 'jb2a.twinkling_stars.points07.white', scale = 0.5, radius = 0.5, } = {}) {
-    if (!macroUtil.dependsOn.required({ id: 'sequencer' })) return;
-    if (file.startsWith('jb2a.')) {
-        if (!macroUtil.dependsOn.someRequired([{ id: 'jb2a_patreon' }, { id: 'JB2A_DnD5e' } ]))
-            return;
-    }
+    macroUtil.dependsOn.required({ id: 'sequencer' });
+    if (file.startsWith('jb2a.')) { macroUtil.dependsOn.someRequired([{ id: 'jb2a_patreon' }, { id: 'JB2A_DnD5e' } ]); }
 
     // This helper creates and configures a single mote effect section.
     function createMote(idx) {
