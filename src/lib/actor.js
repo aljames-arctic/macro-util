@@ -7,4 +7,10 @@ async function findResourceByLabel(actor, label) {
     return null;
 }
 
-export const actorApi = { findResourceByLabel };
+async function createItem(actor, itemData, {forceRecreate = false} = {}) {   
+        // Ensure actor has named spell
+        const actorItem = actor.items.find(item => item.name === itemData.name);
+        if (actorItem == null && !forceRecreate) await Item.create(itemData, { parent: actor });
+}
+
+export const actorApi = { findResourceByLabel, createItem };
